@@ -10,9 +10,9 @@ RStudio supports Vim keybindings in the source editor, but
 {rstudiovim} offers a 🪟 **Windows-only** workaround by reading Vim commands from 
 a file and simulating key presses to execute them on your behalf.
 
-#### Overview
-You can install the package  from
-[GitHub](https://github.com/) with:
+### Overview
+You can install the package from
+[GitHub](https://github.com/davidfoord1/rstudiovim) with:
 
 ``` r
 # install.packages("remotes")
@@ -25,13 +25,13 @@ Load the package with:
 library(rstudiovim)
 ```
 
-Create and edit a config file (.vimrc), adding a Vim command on each line:
+Create and edit a config file (`.vimrc`), adding a Vim command on each line:
 
 ``` r
 file.edit(rsvim_default_file())
 ```
 
-Execute all the commands in the config file:
+Then execute all the commands in the file with one function call:
 
 ```r
 rsvim_exec_file()
@@ -52,26 +52,17 @@ rsvim_exec("help")
 
 ## Example 🔍
 
-Here's a couple of things you might want configured:
-
-1. Going from insert mode to normal mode with `Esc` or `Ctrl+[` might feel like
-too much movement for a common action. It can be nice to have an option to do so
-using home-row keys. You can achieve this with something like `:imap jk <Esc>`
+Going from insert mode to normal mode with `Esc` or `Ctrl+[` might feel like too
+much movement for such a common action. It can be nice to have an option to do
+so using home-row keys. You can achieve this with a command like `:imap jk <Esc>` 
 from normal mode in the source editor.
 
-2. When you yank text (e.g. `yiw`) and then select other text and paste over it
-(e.g. `viwp`), the replaced text will be the next thing you paste. So you might
-want to have a shortcut for pasting while keeping yanked text. Due to a quirk in
-the RStudio implementation (there are many), using `gv` to reselct will select
-an extra character, but we can make it work with an additional `h`, like `:map
-\p pgvhy`.
-
-Again, these mappings only persist while you have RStudio open, so here are the
-steps to have these settings apply every time you are editing in RStudio:
+Again, these mappings only persist for your RStudio session, so {rstudiovim} is 
+here to help you apply these settings every time you are editing in RStudio:
 
 **Create a file containing the commands.** 
 
-{rstudiovim} suggests a file path you can edit with:
+There is a suggested .vimrc path you can edit with:
 
 ```r
 file.edit(rsvim_default_file())
@@ -85,9 +76,6 @@ by preceding them with double quotes `"`:
 " home-row exit from insert mode
 imap jk <Esc>
 
-" past and reyank - extra h because Rstudio selects an extra character
-map \p pgvhy
-
 ```
 
 **Execute config on R session start.** 
@@ -99,8 +87,7 @@ if (interactive) rstudiovim::rsvim_exec_file()
 ```
 
 With this, whenever you are insert mode and type `jk` in one key chain, you will
-return to normal mode.  you can select and paste over other text with e.g.
-`viw\p` multiple times, pasting the originally yanked text.
+return to normal mode, and this binding will be applied for every R session.
 
 ### Config in the cloud ☁️
 
