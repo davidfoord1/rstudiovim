@@ -8,26 +8,44 @@ rsvim_exec(command, focus_source = "Ctrl+1")
 }
 \arguments{
 \item{command}{String. A vim command to execute. This is the text you would
-type in the vim command dialogue box after \code{:} and before \code{Enter}.}
+type in the vim command dialogue box after pressing \code{:} and before pressing
+\code{Enter}.}
 
-\item{focus_source}{String. Keyboard shortcut for focusing on the source
-pane, e.g. as in Tools --> Modify Keyboard Shortcuts.... The RStudio
-default is \code{Ctrl+1}. Build strings as appropriate for
-\code{\link[KeyboardSimulator:keybd.press]{KeyboardSimulator::keybd.press()}}.}
+\item{focus_source}{String. Keyboard shortcut for \verb{Move focus to source} e.g.
+as in \verb{Tools -> Modify Keyboard Shortcuts...} The RStudio default is
+\code{Ctrl+1}.}
 }
 \value{
 Returns \code{NULL} invisibly.
 }
 \description{
-Pass a string to be executed as vim command. \code{\link{KeyboardSimulator}} is used
-to simulate navigating to source, and typing
+Pass a string to be executed as a Vim command in the RStudio source editor
+\code{\link{KeyboardSimulator}} is used to simulate navigating to source, entering
+normal mode and typing out the command.
 }
+\details{
+Strings for \code{focus_source} must be built as appropriate for
+\code{\link[KeyboardSimulator:keybd.press]{KeyboardSimulator::keybd.press()}}.
+}
+\section{Conditions}{
+
+Of course Vim keybindings must be enabled and you must have a file open in
+the source editor so that you could execute the commands if you moved focus
+to source yourself.
+}
+
 \examples{
-# Create a home-row binding jk to go from insert mode to normal mode.
+\dontrun{
+#' # Create a home-row binding jk to go from insert mode to normal mode.
 rsvim_exec("imap jk <Esc>")
 
 # Replace "text" with "rep" everywhere in the active document.
 rsvim_exec("\%s/text/rep/g")
 
-
+# Bring up RStudio's Vim help (see Ex Commands for other commands)
+rsvim_exec("help")
+}
+}
+\seealso{
+\code{\link[=rsvim_exec_file]{rsvim_exec_file()}} to run all commands from a config file.
 }
