@@ -2,3 +2,4 @@
 
 export(rsvim_default_file)
 export(rsvim_exec)
+export(rsvim_exec_file)
