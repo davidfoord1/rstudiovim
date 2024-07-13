@@ -59,10 +59,12 @@ too much movement for a common action. It can be nice to have an option to do so
 using home-row keys. You can achieve this with something like `:imap jk <Esc>`
 from normal mode in the source editor.
 
-2. When you yank text (e.g. `yiw`) and then select other text and paste over
-it (e.g. `viwp`), the replaced text will be the next thing you paste. So you
-might want to have a shortcut for pasting while keeping yanked text like `:map
-\p pgvy`.
+2. When you yank text (e.g. `yiw`) and then select other text and paste over it
+(e.g. `viwp`), the replaced text will be the next thing you paste. So you might
+want to have a shortcut for pasting while keeping yanked text. Due to a quirk in
+the RStudio implementation (there are many), using `gv` to reselct will select
+an extra character, but we can make it work with an additional `h`, like `:map
+\p pgvhy`.
 
 Again, these mappings only persist while you have RStudio open, so here are the
 steps to have these settings apply every time you are editing in RStudio:
@@ -75,12 +77,16 @@ steps to have these settings apply every time you are editing in RStudio:
 file.edit(rsvim_default_file())
 ```
 
-Each command must be on its own line. Do not include the preceding `:`, just the
-text you would enter in the command dialogue box, like:
+Each command must be on its own line. Do not include the preceding `:`. Just use
+the text you would enter in the command dialogue box. You can add comment lines
+by preceding them with double quotes `"`:
 
 ```vim
+" home-row exit from insert mode
 imap jk <Esc>
-map \p pgvy
+
+" past and reyank - extra h because Rstudio selects an extra character
+map \p pgvhy
 
 ```
 
