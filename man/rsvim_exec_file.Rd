@@ -27,14 +27,15 @@ ensure that these bindings are always active.
 \details{
 A command is the text you would type in the Vim command dialogue box
 after pressing \code{:} and before pressing \code{Enter}. This function will simulate
-the key presses to execute all of the commands in the file.
+the key presses to execute all of the commands in the file. You can include
+comments in lines starting with double quotes \verb{"}.
 
 You can set up a binding from Vim normal mode like \verb{:imap jk <Esc>}. If you
 include the line \verb{imap jk <Esc>} in the \code{con} file, this function will
 execute it for you.
 
-The default command list file is called \code{.vimrc}, but it can be any
-text file.
+The default file is called \code{.vimrc}, but it can be any file with text in
+the right format.
 }
 \examples{
 \dontrun{

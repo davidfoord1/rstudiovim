@@ -15,14 +15,15 @@
 #'
 #' @details A command is the text you would type in the Vim command dialogue box
 #'   after pressing `:` and before pressing `Enter`. This function will simulate
-#'   the key presses to execute all of the commands in the file.
+#'   the key presses to execute all of the commands in the file. You can include
+#'   comments in lines starting with double quotes `"`.
 #'
 #'   You can set up a binding from Vim normal mode like `:imap jk <Esc>`. If you
 #'   include the line `imap jk <Esc>` in the `con` file, this function will
 #'   execute it for you.
 #'
-#'   The default file is called `.vimrc`, but it can be any
-#'   text file.
+#'   The default file is called `.vimrc`, but it can be any file with text in
+#'   the right format.
 #'
 #' @return Returns `NULL` invisibly
 #' @export
@@ -40,7 +41,14 @@
 rsvim_exec_file <- function(con = rsvim_default_file()) {
   commands = readLines(con)
 
-  lapply(commands, rsvim_exec)
+  exec_commands <- function(command) {
+    is_comment <- startsWith(command, '\"')
+    is_blank   <- nchar(command) < 3
+
+    if (!is_comment & !is_blank) rsvim_exec(command)
+  }
+
+  lapply(commands, exec_commands)
 
   invisible()
 }
