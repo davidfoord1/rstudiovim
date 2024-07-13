@@ -39,11 +39,11 @@
 #' if (interactive()) rsvim_exec_file()
 #' }
 rsvim_exec_file <- function(con = rsvim_default_file()) {
-  commands = readLines(con)
+  commands <- readLines(con)
 
   exec_commands <- function(command) {
     is_comment <- startsWith(command, '\"')
-    is_blank   <- nchar(command) < 3
+    is_blank   <- nchar(trimws(command)) == 0
 
     if (!is_comment & !is_blank) rsvim_exec(command)
   }
