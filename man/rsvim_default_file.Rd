@@ -19,3 +19,6 @@ keybinding config files.
 file.edit(rsvim_default_file())
 }
 }
+\seealso{
+\code{\link[=rsvim_exec_file]{rsvim_exec_file()}} To execute commands from a file at this path.
+}

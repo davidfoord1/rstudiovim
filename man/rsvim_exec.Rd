@@ -12,14 +12,14 @@ type in the vim command dialogue box after pressing \code{:} and before pressing
 \code{Enter}.}
 
 \item{focus_source}{String. Keyboard shortcut for \verb{Move focus to source} e.g.
-as in \verb{Tools -> Modify Keyboard Shortcuts...} The RStudio default is
+as in \verb{Tools -> Modify Keyboard Shortcuts}. The RStudio default is
 \code{Ctrl+1}.}
 }
 \value{
 Returns \code{NULL} invisibly.
 }
 \description{
-Pass a string to be executed as a Vim command in the RStudio source editor
+Pass a string to be executed as a Vim command in the RStudio source editor.
 \code{\link{KeyboardSimulator}} is used to simulate navigating to source, entering
 normal mode and typing out the command.
 }

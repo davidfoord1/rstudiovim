@@ -1,6 +1,6 @@
 #' Execute vim command in source editor
 #'
-#' Pass a string to be executed as a Vim command in the RStudio source editor
+#' Pass a string to be executed as a Vim command in the RStudio source editor.
 #' [`KeyboardSimulator`] is used to simulate navigating to source, entering
 #' normal mode and typing out the command.
 #'
@@ -14,7 +14,7 @@
 #'   `Enter`.
 #'
 #' @param focus_source String. Keyboard shortcut for `Move focus to source` e.g.
-#'   as in `Tools -> Modify Keyboard Shortcuts...` The RStudio default is
+#'   as in `Tools -> Modify Keyboard Shortcuts`. The RStudio default is
 #'   `Ctrl+1`.
 #'
 #' @details Strings for `focus_source` must be built as appropriate for
