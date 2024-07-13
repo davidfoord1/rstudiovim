@@ -3,11 +3,11 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-## Configure RStudio Vim keybindings 
+## Configure RStudio Vim keybindings ⌨️
 
 RStudio supports Vim keybindings in the source editor, but 
 [doesn't support a Vim keybinding config](https://github.com/rstudio/rstudio/issues/7350).
-{rstudiovim} offers a **Windows-only** workaround by reading Vim commands from 
+{rstudiovim} offers a 🪟 **Windows-only** workaround by reading Vim commands from 
 a file and simulating key presses to execute them on your behalf.
 
 #### Overview
@@ -25,7 +25,7 @@ Load the package with:
 library(rstudiovim)
 ```
 
-Create and edit a config file, adding a Vim command on each line:
+Create and edit a config file (.vimrc), adding a Vim command on each line:
 
 ``` r
 file.edit(rsvim_default_file())
@@ -44,18 +44,28 @@ RStudio session. Then by using `rsvim_exec_file()` in our
 to execute R code at the start of every R session, we can ensure that these 
 bindings are always active.
 
-Alternatively execute individual commands like:
+Alternatively execute individual commands with a string like:
 
 ```r
 rsvim_exec("help")
 ```
 
-## Example
+## Example 🔍
 
-Say you want to have a way to go from insert mode to normal mode using home-row
-keys. You can achieve this by executing something like `:imap jk <Esc>` from 
-normal mode in the source editor. Here are the steps to have the setting apply
-every time you are editing in RStudio:
+Here's a couple of things you might want configured:
+
+1. Going from insert mode to normal mode with `Esc` or `Ctrl+[` might feel like
+too much movement for a common action. It can be nice to have an option to do so
+using home-row keys. You can achieve this with something like `:imap jk <Esc>`
+from normal mode in the source editor.
+
+2. When you yank text (e.g. `yiw`) and then select other text and paste over
+it (e.g. `viwp`), the replaced text will be the next thing you paste. So you
+might want to have a shortcut for pasting while keeping yanked text like `:map
+\p pgvy`.
+
+Again, these mappings only persist while you have RStudio open, so here are the
+steps to have these settings apply every time you are editing in RStudio:
 
 **Create a file containing the commands.** 
 
@@ -65,13 +75,12 @@ every time you are editing in RStudio:
 file.edit(rsvim_default_file())
 ```
 
-Each command must be on its own line and the last line should be a new line. Do
-not include the preceding `:`, just the text you would enter in the command
-dialogue box, like:
+Each command must be on its own line. Do not include the preceding `:`, just the
+text you would enter in the command dialogue box, like:
 
-```
+```vim
 imap jk <Esc>
-
+map \p pgvy
 
 ```
 
@@ -83,18 +92,25 @@ With the package installed, add the following to your `.Rprofile`:
 if (interactive) rstudiovim::rsvim_exec_file()
 ```
 
-Then whenever your are insert mode and type `jk` in one keychain, you will 
-return to normal mode. By default this function points to the 
-`rsvim_default_file()` path, but you can use any
-text file or connection object containing your Vim commands:
+With this, whenever you are insert mode and type `jk` in one key chain, you will
+return to normal mode.  you can select and paste over other text with e.g.
+`viw\p` multiple times, pasting the originally yanked text.
+
+### Config in the cloud ☁️
+
+The exec file function points by default to the `rsvim_default_file()` path, 
+but you can use any text file or connection object containing your Vim commands.
+For instance you can use a web location to easily share the config between
+machines, like this to execute the [example vimrc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc):
 
 ```r
-rsvim_exec_file("path/to/file")
+rsvim_exec_file("https://raw.github.com/davidfoord1/rstudiovim/main/inst/example.vimrc")
 ```
 
-### Conditions for success
+## Conditions for success. 📃
 
-1. You're using RStudio on Windows
-2. `Keybinding set for editor` must be Vim.
-3. A file must be open in the source editor, so that you could execute Vim 
-commands if you navigated to source yourself.
+1. You're using RStudio on Windows.
+2. Setting `Keybinding set for editor` must be Vim (of course!).
+3. **A file must be open in the source editor**, so that you could execute Vim 
+commands if you navigated to source yourself. Otherwise it will probably 
+try Vim commands in the R console.
