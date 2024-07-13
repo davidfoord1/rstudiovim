@@ -1,10 +1,10 @@
 #' Get suggested config file path
 #'
-#' The file is `.rstudiovim` located in
+#' The file is `.vimrc` located in
 #' `%APPDATA%/RStudio/keybindings/` where you can also find RStudio's JSON
 #' keybinding config files.
 #'
-#' @return String. The full file path to `.rstudiovim`
+#' @return String. The full file path to `.vimrc`
 #'
 #' @export
 #'
@@ -17,6 +17,6 @@ rsvim_default_file <- function() {
     Sys.getenv("APPDATA"),
     "RStudio",
     "keybindings",
-    ".rstudiovim"
+    ".vimrc"
   )
 }

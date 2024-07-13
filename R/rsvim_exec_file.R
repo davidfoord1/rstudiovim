@@ -21,7 +21,7 @@
 #'   include the line `imap jk <Esc>` in the `con` file, this function will
 #'   execute it for you.
 #'
-#'   The default command list file is called `.rstudiovim`, but it can be any
+#'   The default file is called `.vimrc`, but it can be any
 #'   text file.
 #'
 #' @return Returns `NULL` invisibly

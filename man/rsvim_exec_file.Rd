@@ -33,7 +33,7 @@ You can set up a binding from Vim normal mode like \verb{:imap jk <Esc>}. If you
 include the line \verb{imap jk <Esc>} in the \code{con} file, this function will
 execute it for you.
 
-The default command list file is called \code{.rstudiovim}, but it can be any
+The default command list file is called \code{.vimrc}, but it can be any
 text file.
 }
 \examples{

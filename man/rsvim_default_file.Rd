@@ -7,10 +7,10 @@
 rsvim_default_file()
 }
 \value{
-String. The full file path to \code{.rstudiovim}
+String. The full file path to \code{.vimrc}
 }
 \description{
-The file is \code{.rstudiovim} located in
+The file is \code{.vimrc} located in
 \verb{\%APPDATA\%/RStudio/keybindings/} where you can also find RStudio's JSON
 keybinding config files.
 }
