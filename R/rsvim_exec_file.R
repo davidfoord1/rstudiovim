@@ -67,10 +67,6 @@ rsvim_exec_file <- function(con = rsvim_default_file(), focus_source = "Ctrl+1",
 
   # check if the key presses could be executed and apply to each line
   exec_commands <- function() {
-    if (is.null(rstudioapi::getSourceEditorContext())) {
-      stop("rsvim could not find source editor")
-    }
-
     commands <- readLines(con)
     lapply(commands, exec_command)
     message(".vimrc executed.")

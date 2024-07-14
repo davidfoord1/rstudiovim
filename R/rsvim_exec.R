@@ -37,7 +37,24 @@
 #' rsvim_exec("help")
 #' }
 rsvim_exec <- function(command, focus_source = "Ctrl+1") {
+  if (is.null(rstudioapi::getSourceEditorContext())) {
+    stop(paste("rsvim could not find source editor at command:",
+               paste0("  ", command),
+               "",
+               "Is there no file open at the front of the source editor?",
+               sep = "\n"))
+  }
+
   KeyboardSimulator::keybd.press(focus_source)
+
+  if (rstudioapi::getActiveDocumentContext()$id == "#console") {
+    stop(paste("rsvim could not focus source at command:",
+               paste0("  ", command),
+               "",
+               "Is the focus_source keyboard shortcut incorrect?",
+               sep = "\n"))
+  }
+
   KeyboardSimulator::keybd.press("Esc")
   KeyboardSimulator::keybd.press("Shift+;")
   KeyboardSimulator::keybd.type_string(command)
