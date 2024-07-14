@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Windows-R-CMD-check](https://github.com/davidfoord1/rstudiovim/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidfoord1/rstudiovim/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Configure RStudio Vim keybindings ⌨️
