@@ -13,3 +13,6 @@ Imports:
     rstudioapi
 URL: https://github.com/davidfoord1/rstudiovim
 BugReports: https://github.com/davidfoord1/rstudiovim/issues
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
