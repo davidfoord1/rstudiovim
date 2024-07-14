@@ -38,17 +38,45 @@
 #' # Put something like this in your .Rprofile file:
 #' if (interactive()) rsvim_exec_file()
 #' }
-rsvim_exec_file <- function(con = rsvim_default_file()) {
-  commands <- readLines(con)
-
-  exec_commands <- function(command) {
+rsvim_exec_file <- function(con = rsvim_default_file(), focus_source = "Ctrl+1", rprofile = FALSE) {
+  # check and execute individual lines
+  exec_command <- function(command) {
     is_comment <- startsWith(command, '\"')
     is_blank   <- nchar(trimws(command)) == 0
 
-    if (!is_comment & !is_blank) rsvim_exec(command)
+    if (!is_comment & !is_blank) rsvim_exec(command, focus_source)
   }
 
-  lapply(commands, exec_commands)
+  # check if the key presses could be executed and apply to each line
+  exec_commands <- function() {
+    if (is.null(rstudioapi::getSourceEditorContext())) {
+      stop("rsvim could not find source editor")
+    }
+
+    commands <- readLines(con)
+    lapply(commands, exec_command)
+    message(".vimrc executed.")
+  }
+
+  # set hook for execution on RStudio start up
+  # else execute immediately
+  if (rprofile) {
+    setHook(
+      hookName = "rstudio.sessionInit",
+      value = function(newSession) {
+        if (newSession) {
+
+          exec_commands()
+
+        }
+      },
+      action = "append"
+    )
+  } else {
+
+    exec_commands()
+
+  }
 
   invisible()
 }
