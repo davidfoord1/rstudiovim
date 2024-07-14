@@ -5,7 +5,7 @@
 \title{Execute all commands in a vim config file}
 \usage{
 rsvim_exec_file(
-  con = rsvim_default_file(),
+  con = rsvim_default_path(),
   focus_source = "Ctrl+1",
   rprofile = FALSE
 )
@@ -70,5 +70,5 @@ if (interactive()) rsvim_exec_file(rprofile = TRUE)
 \seealso{
 \code{\link[=rsvim_exec]{rsvim_exec()}} to execute individual commands.
 
-\code{\link[=rsvim_default_file]{rsvim_default_file()}} to get the default file path.
+\code{\link[=rsvim_default_path]{rsvim_default_path()}} to get the default file path.
 }

@@ -46,7 +46,7 @@
 #'
 #' @seealso [rsvim_exec()] to execute individual commands.
 #'
-#' [rsvim_default_file()] to get the default file path.
+#' [rsvim_default_path()] to get the default file path.
 #'
 #' @examples
 #' \dontrun{
@@ -56,7 +56,7 @@
 #' # Execute on startup with this in your .Rprofile file:
 #' if (interactive()) rsvim_exec_file(rprofile = TRUE)
 #' }
-rsvim_exec_file <- function(con = rsvim_default_file(), focus_source = "Ctrl+1", rprofile = FALSE) {
+rsvim_exec_file <- function(con = rsvim_default_path(), focus_source = "Ctrl+1", rprofile = FALSE) {
   # check and execute individual lines
   exec_command <- function(command) {
     is_comment <- startsWith(command, '\"')

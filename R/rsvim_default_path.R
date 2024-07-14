@@ -12,9 +12,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' file.edit(rsvim_default_file())
+#' file.edit(rsvim_default_path())
 #' }
-rsvim_default_file <- function() {
+rsvim_default_path <- function() {
   file.path(
     Sys.getenv("APPDATA"),
     "RStudio",

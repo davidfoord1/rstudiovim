@@ -31,7 +31,7 @@ Create and edit a config file (`.vimrc`) with a Vim command on each line. A
 path is suggested by:
 
 ``` r
-rsvim_default_file()
+rsvim_default_path()
 ```
 
 Use Vim commands `map`, `imap`, `nmap` and `vmap` in the file to
@@ -67,7 +67,7 @@ here to help you apply these settings every time you are editing in RStudio.
 **Create your .vimrc file**
 
 ```r
-file.edit(rsvim_default_file())
+file.edit(rsvim_default_path())
 ```
 
 **Write your commands**
@@ -100,7 +100,7 @@ With those files saved, now every session, you can use `jk` to return to normal 
 
 ## Config in the cloud ☁️
 
-The exec file function points by default to the `rsvim_default_file()` path, 
+The exec file function points by default to the `rsvim_default_path()` path, 
 but you can use any text file or connection object containing your Vim commands.
 For instance you can use a web location to easily share the config between
 machines, like this to execute the [example vimrc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc):
