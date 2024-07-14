@@ -1,42 +1,60 @@
-#' Execute all commands in rsvim config file
+#' Execute all commands in a vim config file
 #'
-#' @description Execute each line in a file as Vim commands. In the file each
-#'   line should contain a single Vim command and the last line should be a new
-#'   line.
+#' @description Execute each line in a file as Vim commands. Include Vim
+#'   commands `map`, `imap`, `nmap` and `vmap` in your file to customise your
+#'   source editor keybindings.
 #'
-#'   We can use Vim commands `map`, `imap`, `nmap` and `vmap` in our file to
-#'   customise our source editor keybindings. These bindings persist for the
-#'   duration of the RStudio session. Then by using `rsvim_exec_file()` in our
-#'   [.Rprofile] to execute R code at the start of every R session, we can
-#'   ensure that these bindings are always active.
+#'   Use `rsvim_exec_file()` to execute all of the commands. Bindings persist
+#'   for the duration of the RStudio session.
+#'
+#'   Use `rsvim_exec_file(rprofile = TRUE)` in your [.Rprofile] to execute the
+#'   commands on RStudio startup, so they are always active.
 #'
 #' @param con A string file path or connection object for a file with Vim
 #'   commands to execute.
 #'
-#' @details A command is the text you would type in the Vim command dialogue box
-#'   after pressing `:` and before pressing `Enter`. This function will simulate
-#'   the key presses to execute all of the commands in the file. You can include
-#'   comments in lines starting with double quotes `"`.
+#' @param focus_source String. Keyboard shortcut for `Move focus to source`. The
+#'   RStudio default is `Ctrl+1`.
 #'
-#'   You can set up a binding from Vim normal mode like `:imap jk <Esc>`. If you
-#'   include the line `imap jk <Esc>` in the `con` file, this function will
-#'   execute it for you.
+#' @param rprofile Logical. Set to `TRUE` if calling this function within the
+#'   `.Rprofile` i.e. before the RStudio API is available. This changes the
+#'   behaviour from immediate execution to waiting for the RStudio API to become
+#'   available. Currently only works on RStudio startup, not any R session
+#'   restart.
 #'
-#'   The default file is called `.vimrc`, but it can be any file with text in
-#'   the right format.
+#' @details You can execute a command from Vim normal mode manually by pressing
+#'   `:` to enter command mode, typing your command and then pressing `Enter`.
+#'   To use this function you write these commands in your file
+#'   passed to `con`. You can include comments in lines starting with double
+#'   quotes `"`. Each command should be on it's own line, like:
+#'
+#'
+#' `imap jk <Esc>`
+#'
+#' This function will simulate the key presses to execute the commands in your
+#' file. The default file is called `.vimrc`, but it can be any file with text
+#' in the right format.
+#'
+#' @section Rprofile execution:
+#' When `rprofile = TRUE` this function uses [setHook()] to wait for the RStudio
+#' API to become available before executing the commands. This is only triggered
+#' the first time the RStudio session is opened, so not on every R session
+#' restart.
 #'
 #' @return Returns `NULL` invisibly
 #' @export
 #'
-#' @seealso
-#' [rsvim_exec()] to execute individual commands.
+#' @seealso [rsvim_exec()] to execute individual commands.
 #'
 #' [rsvim_default_file()] to get the default file path.
 #'
 #' @examples
 #' \dontrun{
-#' # Put something like this in your .Rprofile file:
-#' if (interactive()) rsvim_exec_file()
+#' # Execute interactively:
+#' rsvim_exec_file()
+#'
+#' # Execute on startup with this in your .Rprofile file:
+#' if (interactive()) rsvim_exec_file(rprofile = TRUE)
 #' }
 rsvim_exec_file <- function(con = rsvim_default_file(), focus_source = "Ctrl+1", rprofile = FALSE) {
   # check and execute individual lines

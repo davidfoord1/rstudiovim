@@ -2,45 +2,69 @@
 % Please edit documentation in R/rsvim_exec_file.R
 \name{rsvim_exec_file}
 \alias{rsvim_exec_file}
-\title{Execute all commands in rsvim config file}
+\title{Execute all commands in a vim config file}
 \usage{
-rsvim_exec_file(con = rsvim_default_file())
+rsvim_exec_file(
+  con = rsvim_default_file(),
+  focus_source = "Ctrl+1",
+  rprofile = FALSE
+)
 }
 \arguments{
 \item{con}{A string file path or connection object for a file with Vim
 commands to execute.}
+
+\item{focus_source}{String. Keyboard shortcut for \verb{Move focus to source}. The
+RStudio default is \code{Ctrl+1}.}
+
+\item{rprofile}{Logical. Set to \code{TRUE} if calling this function within the
+\code{.Rprofile} i.e. before the RStudio API is available. This changes the
+behaviour from immediate execution to waiting for the RStudio API to become
+available. Currently only works on RStudio startup, not any R session
+restart.}
 }
 \value{
 Returns \code{NULL} invisibly
 }
 \description{
-Execute each line in a file as Vim commands. In the file each
-line should contain a single Vim command and the last line should be a new
-line.
+Execute each line in a file as Vim commands. Include Vim
+commands \code{map}, \code{imap}, \code{nmap} and \code{vmap} in your file to customise your
+source editor keybindings.
 
-We can use Vim commands \code{map}, \code{imap}, \code{nmap} and \code{vmap} in our file to
-customise our source editor keybindings. These bindings persist for the
-duration of the RStudio session. Then by using \code{rsvim_exec_file()} in our
-\link{.Rprofile} to execute R code at the start of every R session, we can
-ensure that these bindings are always active.
+Use \code{rsvim_exec_file()} to execute all of the commands. Bindings persist
+for the duration of the RStudio session.
+
+Use \code{rsvim_exec_file(rprofile = TRUE)} in your \link{.Rprofile} to execute the
+commands on RStudio startup, so they are always active.
 }
 \details{
-A command is the text you would type in the Vim command dialogue box
-after pressing \code{:} and before pressing \code{Enter}. This function will simulate
-the key presses to execute all of the commands in the file. You can include
-comments in lines starting with double quotes \verb{"}.
+You can execute a command from Vim normal mode manually by pressing
+\code{:} to enter command mode, typing your command and then pressing \code{Enter}.
+To use this function you write these commands in your file
+passed to \code{con}. You can include comments in lines starting with double
+quotes \verb{"}. Each command should be on it's own line, like:
 
-You can set up a binding from Vim normal mode like \verb{:imap jk <Esc>}. If you
-include the line \verb{imap jk <Esc>} in the \code{con} file, this function will
-execute it for you.
+\verb{imap jk <Esc>}
 
-The default file is called \code{.vimrc}, but it can be any file with text in
-the right format.
+This function will simulate the key presses to execute the commands in your
+file. The default file is called \code{.vimrc}, but it can be any file with text
+in the right format.
 }
+\section{Rprofile execution}{
+
+When \code{rprofile = TRUE} this function uses \code{\link[=setHook]{setHook()}} to wait for the RStudio
+API to become available before executing the commands. This is only triggered
+the first time the RStudio session is opened, so not on every R session
+restart.
+}
+
 \examples{
 \dontrun{
-# Put something like this in your .Rprofile file:
-if (interactive()) rsvim_exec_file()
+# Execute interactively:
+rsvim_exec_file()
+
+# Execute on startup with this in your .Rprofile file:
+if (interactive()) rsvim_exec_file(rprofile = TRUE)
 }
 }
 \seealso{
