@@ -37,22 +37,22 @@
 #' rsvim_exec("help")
 #' }
 rsvim_exec <- function(command, focus_source = "Ctrl+1") {
-  if (is.null(rstudioapi::getSourceEditorContext())) {
-    stop(paste("rsvim could not find source editor at command:",
-               paste0("  ", command),
-               "",
-               "Is there no file open at the front of the source editor?",
-               sep = "\n"))
+  editor_is_null <- is.null(rstudioapi::getSourceEditorContext())
+
+  if (editor_is_null) {
+    exec_stop("rsvim could not find source editor at command:",
+               command,
+               "Is there no file open at the front of the source editor?")
   }
 
   KeyboardSimulator::keybd.press(focus_source)
 
-  if (rstudioapi::getActiveDocumentContext()$id == "#console") {
-    stop(paste("rsvim could not focus source at command:",
-               paste0("  ", command),
-               "",
-               "Is the focus_source keyboard shortcut incorrect?",
-               sep = "\n"))
+  focus_is_source <- rstudioapi::getActiveDocumentContext()[["id"]] == "#console"
+
+  if (focus_is_source) {
+    exec_stop("rsvim could not focus source at command:",
+               command,
+               "Is the focus_source keyboard shortcut incorrect?")
   }
 
   KeyboardSimulator::keybd.press("Esc")
@@ -61,4 +61,27 @@ rsvim_exec <- function(command, focus_source = "Ctrl+1") {
   KeyboardSimulator::keybd.press("Enter")
 
   invisible()
+}
+
+#' Error while executing Vim command
+#'
+#' Helper function for rsvim_exec
+#'
+#' @param message statement that describes the error that occurred.
+#' @param command the Vim command that was being attempted.
+#' @param suggestion suggest a possible cause/fix for the error.
+#'
+#' @return
+#' Exits running R.
+exec_stop <- function(message, command, suggestion) {
+  stop(
+    paste(
+      message,
+      command,
+      "",
+      suggestion,
+      sep = "\n"
+    ),
+    call. = FALSE
+  )
 }
