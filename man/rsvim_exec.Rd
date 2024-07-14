@@ -11,9 +11,8 @@ rsvim_exec(command, focus_source = "Ctrl+1")
 type in the vim command dialogue box after pressing \code{:} and before pressing
 \code{Enter}.}
 
-\item{focus_source}{String. Keyboard shortcut for \verb{Move focus to source} e.g.
-as in \verb{Tools -> Modify Keyboard Shortcuts}. The RStudio default is
-\code{Ctrl+1}.}
+\item{focus_source}{String. Keyboard shortcut for \verb{Move focus to source}. The
+RStudio default is \code{Ctrl+1}.}
 }
 \value{
 Returns \code{NULL} invisibly.
@@ -29,9 +28,10 @@ Strings for \code{focus_source} must be built as appropriate for
 }
 \section{Conditions}{
 
-Of course Vim keybindings must be enabled and you must have a file open in
+Vim keybindings must be enabled and you must have a file open at the front in
 the source editor so that you could execute the commands if you moved focus
-to source yourself.
+to source yourself. It will error with a different at the front like a
+\code{\link[=View]{View()}} tab.
 }
 
 \examples{

@@ -5,17 +5,17 @@
 #' normal mode and typing out the command.
 #'
 #' @section Conditions:
-#' Of course Vim keybindings must be enabled and you must have a file open in
+#' Vim keybindings must be enabled and you must have a file open at the front in
 #' the source editor so that you could execute the commands if you moved focus
-#' to source yourself.
+#' to source yourself. It will error with a different at the front like a
+#' [View()] tab.
 #'
 #' @param command String. A vim command to execute. This is the text you would
 #'   type in the vim command dialogue box after pressing `:` and before pressing
 #'   `Enter`.
 #'
-#' @param focus_source String. Keyboard shortcut for `Move focus to source` e.g.
-#'   as in `Tools -> Modify Keyboard Shortcuts`. The RStudio default is
-#'   `Ctrl+1`.
+#' @param focus_source String. Keyboard shortcut for `Move focus to source`. The
+#'   RStudio default is `Ctrl+1`.
 #'
 #' @details Strings for `focus_source` must be built as appropriate for
 #' [KeyboardSimulator::keybd.press()].
@@ -76,7 +76,7 @@ rsvim_exec <- function(command, focus_source = "Ctrl+1") {
 #' @param suggestion suggest a possible cause/fix for the error.
 #'
 #' @return
-#' Exits running R.
+#' Exits R execution.
 exec_stop <- function(message, command, suggestion) {
   stop(
     paste(
