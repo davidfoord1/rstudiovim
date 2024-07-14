@@ -25,52 +25,54 @@ Load the package with:
 library(rstudiovim)
 ```
 
-Create and edit a config file (`.vimrc`), adding a Vim command on each line:
+Create and edit a config file (`.vimrc`) with a Vim command on each line. A
+path is suggested by:
 
 ``` r
-file.edit(rsvim_default_file())
+rsvim_default_file()
 ```
 
-Then execute all the commands in the file with one function call:
+Use Vim commands `map`, `imap`, `nmap` and `vmap` in the file to
+customise keybindings. Execute all the commands in the file with
+one function call and they will persist for the RStudio session:
 
 ```r
 rsvim_exec_file()
 ```
 
-We can use Vim commands `map`, `imap`, `nmap` and `vmap` in our file to 
-customise our keybindings. These bindings persist for the duration of the 
-RStudio session. Then by using `rsvim_exec_file()` in our 
-[`.Rprofile`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Startup) 
-to execute R code at the start of every R session, we can ensure that these 
-bindings are always active.
-
-Alternatively execute individual commands with a string like:
+Execute these commands at the start of every RStudio session with the following in your
+[`.Rprofile`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Startup):
 
 ```r
-rsvim_exec("help")
+rstudiovim::rsvim_exec_file(rprofile = TRUE)
 ```
 
 ## Example 🔍
 
 Going from insert mode to normal mode with `Esc` or `Ctrl+[` might feel like too
-much movement for such a common action. It can be nice to have an option to do
-so using home-row keys. You can achieve this with a command like `:imap jk <Esc>` 
-from normal mode in the source editor.
+much movement for such a common action. It would be nice to have an option to do
+so using home-row keys.
+
+You can execute a command from Vim normal mode manually by pressing `:` to enter
+command mode, typing your command and then pressing `Enter` to execute it. So
+you might address this issue with something like `:imap jk <Esc>`. Then whenever
+you are insert mode and type `jk` in one key chain, you will return to normal
+mode.
 
 Again, these mappings only persist for your RStudio session, so {rstudiovim} is 
-here to help you apply these settings every time you are editing in RStudio:
+here to help you apply these settings every time you are editing in RStudio.
 
-**Create a file containing the commands.** 
-
-There is a suggested .vimrc path you can edit with:
+**Create your .vimrc file**
 
 ```r
 file.edit(rsvim_default_file())
 ```
 
+**Write your commands**
+
 Each command must be on its own line. Do not include the preceding `:`. Just use
 the text you would enter in the command dialogue box. You can add comment lines
-by preceding them with double quotes `"`:
+by preceding them with double quotes `"` like so:
 
 ```vim
 " home-row exit from insert mode
@@ -78,18 +80,23 @@ imap jk <Esc>
 
 ```
 
-**Execute config on R session start.** 
-
-With the package installed, add the following to your `.Rprofile`:
+**Edit your .Rprofile**
 
 ```r
-if (interactive) rstudiovim::rsvim_exec_file()
+file.edit("~/.Rprofile")
 ```
 
-With this, whenever you are insert mode and type `jk` in one key chain, you will
-return to normal mode, and this binding will be applied for every R session.
+**Include the function call to execute the file's commands.**
 
-### Config in the cloud ☁️
+```r
+if (interactive())  {
+  rstudiovim::rsvim_exec_file(rprofile = TRUE)
+}
+```
+
+With those files saved, now every session, you can use `jk` to return to normal mode. 
+
+## Config in the cloud ☁️
 
 The exec file function points by default to the `rsvim_default_file()` path, 
 but you can use any text file or connection object containing your Vim commands.
@@ -105,5 +112,5 @@ rsvim_exec_file("https://raw.github.com/davidfoord1/rstudiovim/main/inst/example
 1. You're using RStudio on Windows.
 2. Setting `Keybinding set for editor` must be Vim (of course!).
 3. **A file must be open in the source editor**, so that you could execute Vim 
-commands if you navigated to source yourself. Otherwise it will probably 
-try Vim commands in the R console.
+commands if you navigated to source yourself. It must be a file tab at the front,
+not a non-file tab like a `View()` pane.
