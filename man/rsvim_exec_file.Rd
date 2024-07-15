@@ -4,18 +4,11 @@
 \alias{rsvim_exec_file}
 \title{Execute all commands in a vim config file}
 \usage{
-rsvim_exec_file(
-  con = rsvim_default_path(),
-  focus_source = "Ctrl+1",
-  rprofile = FALSE
-)
+rsvim_exec_file(con = rsvim_default_path(), rprofile = FALSE)
 }
 \arguments{
 \item{con}{A string file path or connection object for a file with Vim
 commands to execute.}
-
-\item{focus_source}{String. Keyboard shortcut for \verb{Move focus to source}. The
-RStudio default is \code{Ctrl+1}.}
 
 \item{rprofile}{Logical. Set to \code{TRUE} if calling this function within the
 \code{.Rprofile} i.e. before the RStudio API is available. This changes the

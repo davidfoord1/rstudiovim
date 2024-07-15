@@ -4,15 +4,12 @@
 \alias{rsvim_exec}
 \title{Execute vim command in source editor}
 \usage{
-rsvim_exec(command, focus_source = "Ctrl+1")
+rsvim_exec(command)
 }
 \arguments{
 \item{command}{String. A vim command to execute. This is the text you would
 type in the vim command dialogue box after pressing \code{:} and before pressing
 \code{Enter}.}
-
-\item{focus_source}{String. Keyboard shortcut for \verb{Move focus to source}. The
-RStudio default is \code{Ctrl+1}.}
 }
 \value{
 Returns \code{NULL} invisibly.
@@ -21,10 +18,6 @@ Returns \code{NULL} invisibly.
 Pass a string to be executed as a Vim command in the RStudio source editor.
 \code{\link{KeyboardSimulator}} is used to simulate navigating to source, entering
 normal mode and typing out the command.
-}
-\details{
-Strings for \code{focus_source} must be built as appropriate for
-\code{\link[KeyboardSimulator:keybd.press]{KeyboardSimulator::keybd.press()}}.
 }
 \section{Conditions}{
 

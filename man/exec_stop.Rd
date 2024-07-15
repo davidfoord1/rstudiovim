@@ -4,7 +4,7 @@
 \alias{exec_stop}
 \title{Error while executing Vim command}
 \usage{
-exec_stop(message, command, suggestion)
+exec_stop(message, command, suggestion = "")
 }
 \arguments{
 \item{message}{statement that describes the error that occurred.}

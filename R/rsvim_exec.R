@@ -14,12 +14,6 @@
 #'   type in the vim command dialogue box after pressing `:` and before pressing
 #'   `Enter`.
 #'
-#' @param focus_source String. Keyboard shortcut for `Move focus to source`. The
-#'   RStudio default is `Ctrl+1`.
-#'
-#' @details Strings for `focus_source` must be built as appropriate for
-#' [KeyboardSimulator::keybd.press()].
-#'
 #' @return Returns `NULL` invisibly.
 #' @export
 #'
@@ -36,7 +30,7 @@
 #' # Bring up RStudio's Vim help (see Ex Commands for other commands)
 #' rsvim_exec("help")
 #' }
-rsvim_exec <- function(command, focus_source = "Ctrl+1") {
+rsvim_exec <- function(command) {
   editor <- rstudioapi::getSourceEditorContext()
 
   if (is.null(editor)) {
@@ -47,15 +41,13 @@ rsvim_exec <- function(command, focus_source = "Ctrl+1") {
     )
   }
 
-  KeyboardSimulator::keybd.press(focus_source)
-
+  rstudioapi::executeCommand("activateSource")
   focus <- rstudioapi::getActiveDocumentContext()[["id"]]
 
   if (focus == "#console") {
     exec_stop(
       "rsvim could not focus source at command:",
-      command,
-      "Is the focus_source keyboard shortcut incorrect?"
+      command
     )
   }
 
@@ -77,7 +69,7 @@ rsvim_exec <- function(command, focus_source = "Ctrl+1") {
 #'
 #' @return
 #' Exits R execution.
-exec_stop <- function(message, command, suggestion) {
+exec_stop <- function(message, command, suggestion = "") {
   stop(
     paste(
       message,

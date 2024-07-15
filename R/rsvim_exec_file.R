@@ -13,9 +13,6 @@
 #' @param con A string file path or connection object for a file with Vim
 #'   commands to execute.
 #'
-#' @param focus_source String. Keyboard shortcut for `Move focus to source`. The
-#'   RStudio default is `Ctrl+1`.
-#'
 #' @param rprofile Logical. Set to `TRUE` if calling this function within the
 #'   `.Rprofile` i.e. before the RStudio API is available. This changes the
 #'   behaviour from immediate execution to waiting for the RStudio API to become
@@ -56,13 +53,13 @@
 #' # Execute on startup with this in your .Rprofile file:
 #' if (interactive()) rsvim_exec_file(rprofile = TRUE)
 #' }
-rsvim_exec_file <- function(con = rsvim_default_path(), focus_source = "Ctrl+1", rprofile = FALSE) {
+rsvim_exec_file <- function(con = rsvim_default_path(), rprofile = FALSE) {
   # check and execute individual lines
   exec_command <- function(command) {
     is_comment <- startsWith(command, '\"')
     is_blank   <- nchar(trimws(command)) == 0
 
-    if (!is_comment & !is_blank) rsvim_exec(command, focus_source)
+    if (!is_comment & !is_blank) rsvim_exec(command)
   }
 
   # check if the key presses could be executed and apply to each line
