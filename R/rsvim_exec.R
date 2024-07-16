@@ -1,8 +1,7 @@
 #' Execute vim command in source editor
 #'
 #' Pass a string to be executed as a Vim command in the RStudio source editor.
-#' [`KeyboardSimulator`] is used to simulate navigating to source, entering
-#' normal mode and typing out the command.
+#' This function then sends the input key presses to type out the command.
 #'
 #' @section Conditions:
 #' Vim keybindings must be enabled and you must have a file open at the front in
@@ -54,10 +53,10 @@ rsvim_exec <- function(command) {
     )
   }
 
-  KeyboardSimulator::keybd.press("Esc")
+  keybd_press("Esc")
   keybd_type_string(":")
   keybd_type_string(command)
-  KeyboardSimulator::keybd.press("Enter")
+  keybd_press("Enter")
 
   invisible()
 }
