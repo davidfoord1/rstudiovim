@@ -3,3 +3,5 @@
 export(rsvim_default_path)
 export(rsvim_exec)
 export(rsvim_exec_file)
+import(Rcpp)
+useDynLib(rstudiovim)

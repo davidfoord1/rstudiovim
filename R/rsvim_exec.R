@@ -15,6 +15,9 @@
 #'   `Enter`.
 #'
 #' @return Returns `NULL` invisibly.
+#'
+#' @import Rcpp
+#' @useDynLib rstudiovim
 #' @export
 #'
 #' @seealso [rsvim_exec_file()] to run all commands from a config file.
@@ -52,8 +55,8 @@ rsvim_exec <- function(command) {
   }
 
   KeyboardSimulator::keybd.press("Esc")
-  KeyboardSimulator::keybd.press("Shift+;")
-  KeyboardSimulator::keybd.type_string(command)
+  keybd_type_string(":")
+  keybd_type_string(command)
   KeyboardSimulator::keybd.press("Enter")
 
   invisible()
