@@ -13,6 +13,10 @@
 #'   type in the vim command dialogue box after pressing `:` and before pressing
 #'   `Enter`.
 #'
+#' @param wait Numeric. Seconds to delay between typing the command and pressing
+#'   enter. This can give time to review commands for testing and
+#'   troubleshooting.
+#'
 #' @return Returns `NULL` invisibly.
 #'
 #' @import Rcpp
@@ -32,7 +36,9 @@
 #' # Bring up RStudio's Vim help (see Ex Commands for other commands)
 #' rsvim_exec("help")
 #' }
-rsvim_exec <- function(command) {
+rsvim_exec <- function(command, wait = 0) {
+  stopifnot(is.numeric(wait))
+
   editor <- rstudioapi::getSourceEditorContext()
 
   if (is.null(editor)) {
@@ -55,7 +61,10 @@ rsvim_exec <- function(command) {
 
   keybd_press("Esc")
   keybd_type_string(":")
+
   keybd_type_string(command)
+
+  Sys.sleep(wait)
   keybd_press("Enter")
 
   invisible()
