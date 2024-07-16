@@ -51,6 +51,4 @@ void keybd_press(std::string input) {
   if (result != keyUpInputs.size()) {
     Rcpp::stop("SendInput failed for key up.");
   }
-
-  Rcpp::Rcout << "Finished keybd_press" << std::endl;
 }
