@@ -2,16 +2,8 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#include "addKeyEvent.h"
 using namespace Rcpp;
-
-// Helper function to add a key event to the inputs vector
-void addKeyEvent(std::vector<INPUT> & inputs, WORD vk, DWORD flags = 0) {
-  INPUT input = { 0 };
-  input.type = INPUT_KEYBOARD;
-  input.ki.wVk = vk;
-  input.ki.dwFlags = flags;
-  inputs.push_back(input);
-}
 
 // [[Rcpp::export]]
 void keybd_type_string(std::string input) {
