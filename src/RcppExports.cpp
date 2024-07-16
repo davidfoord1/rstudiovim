@@ -10,6 +10,16 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// keybd_press
+void keybd_press(std::string input);
+RcppExport SEXP _rstudiovim_keybd_press(SEXP inputSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type input(inputSEXP);
+    keybd_press(input);
+    return R_NilValue;
+END_RCPP
+}
 // keybd_type_string
 void keybd_type_string(std::string input);
 RcppExport SEXP _rstudiovim_keybd_type_string(SEXP inputSEXP) {
@@ -22,6 +32,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_rstudiovim_keybd_press", (DL_FUNC) &_rstudiovim_keybd_press, 1},
     {"_rstudiovim_keybd_type_string", (DL_FUNC) &_rstudiovim_keybd_type_string, 1},
     {NULL, NULL, 0}
 };
