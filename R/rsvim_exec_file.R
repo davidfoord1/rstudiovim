@@ -19,6 +19,8 @@
 #'   available. Currently only works on RStudio startup, not any R session
 #'   restart.
 #'
+#' @inheritParams rsvim_exec
+#'
 #' @details You can execute a command from Vim normal mode manually by pressing
 #'   `:` to enter command mode, typing your command and then pressing `Enter`.
 #'   To use this function you write these commands in your file
@@ -53,13 +55,15 @@
 #' # Execute on startup with this in your .Rprofile file:
 #' if (interactive()) rsvim_exec_file(rprofile = TRUE)
 #' }
-rsvim_exec_file <- function(con = rsvim_default_path(), rprofile = FALSE) {
+rsvim_exec_file <- function(con = rsvim_default_path(),
+                            rprofile = FALSE,
+                            wait = 0) {
   # check and execute individual lines
   exec_command <- function(command) {
     is_comment <- startsWith(command, '\"')
     is_blank   <- nchar(trimws(command)) == 0
 
-    if (!is_comment & !is_blank) rsvim_exec(command)
+    if (!is_comment & !is_blank) rsvim_exec(command, wait = wait)
   }
 
   # check if the key presses could be executed and apply to each line

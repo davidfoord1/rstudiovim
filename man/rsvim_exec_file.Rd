@@ -4,7 +4,7 @@
 \alias{rsvim_exec_file}
 \title{Execute all commands in a vim config file}
 \usage{
-rsvim_exec_file(con = rsvim_default_path(), rprofile = FALSE)
+rsvim_exec_file(con = rsvim_default_path(), rprofile = FALSE, wait = 0)
 }
 \arguments{
 \item{con}{A string file path or connection object for a file with Vim
@@ -15,6 +15,10 @@ commands to execute.}
 behaviour from immediate execution to waiting for the RStudio API to become
 available. Currently only works on RStudio startup, not any R session
 restart.}
+
+\item{wait}{Numeric. Seconds to delay between typing the command and pressing
+enter. This can give time to review commands for testing and
+troubleshooting.}
 }
 \value{
 Returns \code{NULL} invisibly

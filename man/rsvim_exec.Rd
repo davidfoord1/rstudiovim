@@ -4,20 +4,23 @@
 \alias{rsvim_exec}
 \title{Execute vim command in source editor}
 \usage{
-rsvim_exec(command)
+rsvim_exec(command, wait = 0)
 }
 \arguments{
 \item{command}{String. A vim command to execute. This is the text you would
 type in the vim command dialogue box after pressing \code{:} and before pressing
 \code{Enter}.}
+
+\item{wait}{Numeric. Seconds to delay between typing the command and pressing
+enter. This can give time to review commands for testing and
+troubleshooting.}
 }
 \value{
 Returns \code{NULL} invisibly.
 }
 \description{
 Pass a string to be executed as a Vim command in the RStudio source editor.
-\code{\link{KeyboardSimulator}} is used to simulate navigating to source, entering
-normal mode and typing out the command.
+This function then sends the input key presses to type out the command.
 }
 \section{Conditions}{
 

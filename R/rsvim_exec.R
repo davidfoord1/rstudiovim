@@ -1,8 +1,7 @@
 #' Execute vim command in source editor
 #'
 #' Pass a string to be executed as a Vim command in the RStudio source editor.
-#' [`KeyboardSimulator`] is used to simulate navigating to source, entering
-#' normal mode and typing out the command.
+#' This function then sends the input key presses to type out the command.
 #'
 #' @section Conditions:
 #' Vim keybindings must be enabled and you must have a file open at the front in
@@ -14,7 +13,14 @@
 #'   type in the vim command dialogue box after pressing `:` and before pressing
 #'   `Enter`.
 #'
+#' @param wait Numeric. Seconds to delay between typing the command and pressing
+#'   enter. This can give time to review commands for testing and
+#'   troubleshooting.
+#'
 #' @return Returns `NULL` invisibly.
+#'
+#' @import Rcpp
+#' @useDynLib rstudiovim
 #' @export
 #'
 #' @seealso [rsvim_exec_file()] to run all commands from a config file.
@@ -30,7 +36,9 @@
 #' # Bring up RStudio's Vim help (see Ex Commands for other commands)
 #' rsvim_exec("help")
 #' }
-rsvim_exec <- function(command) {
+rsvim_exec <- function(command, wait = 0) {
+  stopifnot(is.numeric(wait))
+
   editor <- rstudioapi::getSourceEditorContext()
 
   if (is.null(editor)) {
@@ -51,10 +59,13 @@ rsvim_exec <- function(command) {
     )
   }
 
-  KeyboardSimulator::keybd.press("Esc")
-  KeyboardSimulator::keybd.press("Shift+;")
-  KeyboardSimulator::keybd.type_string(command)
-  KeyboardSimulator::keybd.press("Enter")
+  keybd_press("Esc")
+  keybd_type_string(":")
+
+  keybd_type_string(command)
+
+  Sys.sleep(wait)
+  keybd_press("Enter")
 
   invisible()
 }
