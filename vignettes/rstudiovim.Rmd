@@ -50,9 +50,21 @@ keybinding with `imap jk <Esc>`, in full pressing the keys `:` `i` `m` `a` `p`
 library(rstudiovim)
 ```
 
+### Troubleshooting
 
+- First, the Vim implementation is quite limited, so always make sure the command
+is one you can execute in RStudio yourself first. If it doesn't there's not much
+{rstudiovim} can do about it.
 
+- If something doesn't work that usually does, try restarting the R session and
+executing your `rsvim_exec_file()` call again. Sometimes the execution gets 
+interrupted by other processes.
 
-
-
-
+- If a command works for you when you type itself, but doesn't seem to work with
+{rstudiovim}, then there may be an issue in the parsing of your commands and 
+translation to keypresses. There is an argument `wait` with which you can specify
+seconds to wait between your commands being typed and then executed. In this way
+you can review what is actually being typed. If you find a disparity between what
+is being typed and what's in your .virmc, please raise (or add to a related) 
+[GitHub issue](https://github.com/davidfoord1/rstudiovim/issues). You can use
+`rsvim_exec()` for a single command if that helps you narrow the behaviour down.
