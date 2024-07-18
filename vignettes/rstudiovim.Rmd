@@ -1,0 +1,58 @@
+---
+title: "rstudiovim"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{rstudiovim}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+First, you need to know how to execute commands to create key bindings.
+
+## Keybinding commands
+
+RStudio offers a few commands for dealing with key bindings:
+^[You can see more available commands by looking through the RStudio 
+[default Ex Command map](https://github.com/rstudio/rstudio/blob/4f7063b13bb0bae8377639a36d3ff4b7626de6e3/src/gwt/src/org/rstudio/studio/client/workbench/views/source/editors/text/ace/keybinding-vim-uncompressed.js#L991C7-L991C26) on GitHub.]
+
+- `imap` - insert mode.
+- `nmap` - normal mode.
+- `vmap` - visual mode.
+- `map`  - for both normal and visual modes. 
+
+`<map_command> <new_key_sequence> <keys_to_execute>`
+
+So to bind home-row keys `jk` to exit from insert mode to normal mode, the 
+command could be:
+
+`imap jk <Esc>` 
+
+### Executing commands
+
+Assuming you already have Vim keybindings active in the RStudio source editor,
+you can bring up Vim command mode from normal mode by pressing `:`, then type
+your command and press `Enter` to execute it.
+
+So starting in normal mode press the keys, you could apply the example
+keybinding with `imap jk <Esc>`, in full pressing the keys `:` `i` `m` `a` `p`
+`<Space>` `j` `k` `<Space>` `<` `E` `s` `c` `>` `<Enter>`.
+
+## Applying {rstudiovim}
+
+```{r setup}
+library(rstudiovim)
+```
+
+
+
+
+
+
+
