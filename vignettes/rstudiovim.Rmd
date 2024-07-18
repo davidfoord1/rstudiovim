@@ -1,0 +1,176 @@
+---
+title: "rstudiovim"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{rstudiovim}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Welcome! This is an intro to usage of the {rstudiovim} package, and assumes you
+have general knowledge of Vim motions. We will go over key binding with Vim ex
+commands, the main package functionality and applying it with an Rprofile file.
+
+## Keybinding commands
+
+RStudio offers a few commands for setting up key bindings:
+
+- `imap` - insert mode.
+- `nmap` - normal mode.
+- `vmap` - visual mode.
+- `map`  - for both normal and visual modes. 
+
+The general structure then goes like this:
+
+`<map_command> <new_key_sequence> <keys_to_execute>`
+
+For example to bind home-row keys to exit from insert mode to normal mode, the 
+command could be:
+
+`imap jk <Esc>` 
+
+Note the _i_ map, meaning this binding applies when you are insert mode. 
+So, when you are in insert mode, the key sequence `jk` is mapped to the 
+`Esc` key, which is the typical way to move from insert mode to normal mode.
+
+### Executing commands
+
+Assuming you already have Vim key bindings active in the RStudio source editor,
+you can bring up Vim command mode from normal mode by pressing `:`, then type
+your command and press `Enter` to execute it.
+
+So starting in normal mode press the keys, you could apply the example
+keybinding with `imap jk <Esc>`, in full pressing the keys `:` `i` `m` `a` `p`
+`<Space>` `j` `k` `<Space>` `<` `E` `s` `c` `>` `<Enter>`.
+
+
+### Recursive keybindings
+
+One thing to watch out for is that the commands listed above are recursive. If
+you use command `map p p`, you won't be able to paste anymore because `p` just
+refers to itself instead of the paste command. Pressing `p` will just do
+nothing.
+
+At present RStudio does not offer non-recurseive (`nore`) versions of the map
+commands typically among Vim ex commands like `noremap`. This means we're mostly
+limited to creating commands for _new_ key chains, like `jk` above.
+
+## Applying commands with {rstudiovim}
+
+If we're happy with a command and can run it ourselves in RStudio, it should be
+relatively straightforward to get that command to run every session. With
+{rstudiovim} installed and loaded we can set up a config file and have it
+executed every session. If you've read the README, you've already seen
+everything you need.
+
+The typical config file is called `.vimrc`. You can create your own version at 
+any location and supply the path, but the simplest usage will be with the default
+path provided.
+
+```r
+file.edit(rsvim_default_path())
+```
+
+Then add your commands to the file, with each on a separate line. You can add
+comment lines by preceding them with double quotes `"` like so:
+
+```vim
+" home-row exit from insert mode
+imap jk <Esc>
+
+```
+
+You must of course save the file! Then we need to point {rstudiovim} to your 
+file to execute. With the default file path, it's as simple as:
+
+```r
+rsvim_exec_file()
+```
+
+
+
+There is a prerequisite that you have a file open at the front of your source
+editor as though you were going to enter the commands - the package is just
+pressing the keys for you. You should see the command-line dialogue box flash up
+and might be able to glimpse what's being typed. Don't provide other inputs
+while this is happening, so as not to interrupt the process. Once done, it 
+reports
+
+```{r echo = FALSE}
+message(".vimrc executed.")
+```
+
+
+If you have used a different path, you pass it at the first argument. It's read
+with `readLines()`, so can can be a remote location as well - which can make it
+easy to share your config between devices. For example:
+
+```r
+rsvim_exec_file("https://raw.github.com/davidfoord1/rstudiovim/main/inst/example.vimrc")
+```
+
+### Applying commands to every session with an Rprofile
+
+Your 
+[`.Rprofile`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Startup)
+is a file containing R code to be executed at the start of every R session. 
+Be mindful you can have a .Rprofile at both the user level and project level - 
+one at project level will be executed instead of user level one, so make sure 
+the rsvim call is where you need it.
+
+```r
+# User level
+file.edit("~/.Rprofile")
+# Project level
+file.edit(".Rprofile")
+```
+
+By using the argument `rprofile = TRUE` the exec file command will set a hook to
+execute on the R Studio session start up. It won't execute on every _R_ session
+restart - it won't need to as the bindings persist through the _R Studio_
+session. To get the config file to be executed, include the following R code:
+
+```r
+if (interactive) {
+  rstudiovim::rsvim_exec_file(rprofile = TRUE)
+}
+```
+
+Alternatively if you think you might want the package attached every session:
+
+```r
+if (interactive) {
+  library(rstudiovim)
+  rsvim_exec_file(rprofile = TRUE)
+}
+```
+
+Again, remember to save your file. Ok, that should be it. Now when you open a new
+RStudio session, you should see that {rstudiovim} is executing the key presses 
+for you.
+
+## Troubleshooting
+
+- First, the Vim implementation is quite limited, so always make sure the command
+is one you can execute in RStudio yourself first. If it doesn't, there's not much
+{rstudiovim} can do about it.
+
+- If something doesn't work that usually does, try restarting the R session and
+executing an `rsvim_exec_file()` call again. Sometimes the execution gets 
+interrupted by other processes.
+
+- If a command works for you when you type it yourself, but doesn't seem to work with
+{rstudiovim}, then there may be an issue in the parsing of your commands and 
+translation to key presses. There is an argument `wait` with which you can specify
+seconds to wait between your commands being typed and then executed. In this way
+you can review what is actually being typed. If you find a disparity between what
+is being typed and what's in your .virmc, please raise (or add to a related) 
+[GitHub issue](https://github.com/davidfoord1/rstudiovim/issues). You can use
+`rsvim_exec()` for a single command if that helps you narrow the behaviour down.

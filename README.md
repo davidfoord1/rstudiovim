@@ -12,6 +12,16 @@ RStudio supports Vim keybindings in the source editor, but
 {rstudiovim} offers a 🪟 **Windows-only** workaround by reading Vim commands from 
 a file and simulating key presses to execute them on your behalf.
 
+Ok, slow down a moment. If you're here, you should probably be seriously
+considering using a different editor, with more comprehensive and configurable
+Vim features. Check out [Neovim](https://neovim.io/) with
+[R.nvim](https://github.com/R-nvim/R.nvim) or
+[quarto-nvim](https://github.com/quarto-dev/quarto-nvim). 
+To be clear, this package is **not** a neat RStudio API integration with its Vim
+mode, there is no such option. This is just: you list what buttons you want
+pressed; the buttons are pressed automatically for you. Nonetheless, it kind of
+works, so you are welcome to go crazy with me...
+
 ### Overview
 You can install the package from
 [GitHub](https://github.com/davidfoord1/rstudiovim) with:
@@ -21,56 +31,42 @@ You can install the package from
 remotes::install_github("davidfoord1/rstudiovim")
 ```
 
-Load the package with:
+Attach and load the package with:
 
 ``` r
 library(rstudiovim)
 ```
 
-Create and edit a config file (`.vimrc`) with a Vim command on each line. A
-path is suggested by:
+Create and edit a config file (`.vimrc`) with a Vim command on each line. Edit
+at the suggest path:
 
 ``` r
-rsvim_default_path()
+file.edit(rsvim_default_path())
 ```
 
 Use Vim commands `map`, `imap`, `nmap` and `vmap` in the file to
-customise keybindings. Execute all the commands in the file with
-one function call and they will persist for the RStudio session:
-
-```r
-rsvim_exec_file()
-```
-
-Execute these commands at the start of every RStudio session with the following in your
+create new keybindings. Execute all the commands in the file with
+one function call and they will persist for the RStudio session. Go further by
+having the package execute these commands at the start of every RStudio session using your
 [`.Rprofile`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Startup):
 
 ```r
+# Interactively
+rsvim_exec_file()
+# In your Rprofile
 rstudiovim::rsvim_exec_file(rprofile = TRUE)
 ```
 
 ## Example 🔍
 
-Going from insert mode to normal mode with `Esc` or `Ctrl+[` might feel like too
-much movement for such a common action. It would be nice to have an option to do
-so using home-row keys.
-
-You can execute a command from Vim normal mode manually by pressing `:` to enter
-command mode, typing your command and then pressing `Enter` to execute it. So
-you might address this issue with something like `:imap jk <Esc>`. Then whenever
-you are insert mode and type `jk` in one key chain, you will return to normal
-mode.
-
-Again, these mappings only persist for your RStudio session, so {rstudiovim} is 
+From editing in normal mode you press `:` to enter command-line mode, typing
+your command and then pressing `Enter` to execute it. If you wanted a home-row
+key chain to exit insert mode you might use the ex command `imap jk <Esc>`. Then
+whenever you are insert mode and type `jk`, you will return to normal mode.
+Again, these mappings only persist for your RStudio session, so {rstudiovim} is
 here to help you apply these settings every time you are editing in RStudio.
 
-**Create your .vimrc file**
-
-```r
-file.edit(rsvim_default_path())
-```
-
-**Write your commands**
+**Write the commands in your .vimrc file**
 
 Each command must be on its own line. Do not include the preceding `:`. Just use
 the text you would enter in the command dialogue box. You can add comment lines
@@ -116,3 +112,5 @@ rsvim_exec_file("https://raw.github.com/davidfoord1/rstudiovim/main/inst/example
 3. **A file must be open in the source editor**, so that you could execute Vim 
 commands if you navigated to source yourself. It must be a file tab at the front,
 not a non-file tab like a `View()` pane.
+4. Don't give inputs while the button presses are being executed as you can 
+interrupt it.
