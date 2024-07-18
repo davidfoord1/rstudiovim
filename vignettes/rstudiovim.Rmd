@@ -14,7 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-First, you need to know how to execute commands to create key bindings.
+Welcome. This is an intro to usage of the {rstudiovim} package, and assumes you
+have knowledge of Vim motions. We will go over keybinding ex commands:
 
 ## Keybinding commands
 
@@ -27,12 +28,18 @@ RStudio offers a few commands for dealing with key bindings:
 - `vmap` - visual mode.
 - `map`  - for both normal and visual modes. 
 
+The general structure then goes like this:
+
 `<map_command> <new_key_sequence> <keys_to_execute>`
 
-So to bind home-row keys `jk` to exit from insert mode to normal mode, the 
+For example to bind home-row keys to exit from insert mode to normal mode, the 
 command could be:
 
 `imap jk <Esc>` 
+
+Note the _i_ map, so this binding applies when you are insert mode. 
+So, when you are in insert mode, the key sequence `jk` is mapped to the 
+`Esc` key, which is the typical way to move from insert mode to normal mode.
 
 ### Executing commands
 
@@ -44,10 +51,60 @@ So starting in normal mode press the keys, you could apply the example
 keybinding with `imap jk <Esc>`, in full pressing the keys `:` `i` `m` `a` `p`
 `<Space>` `j` `k` `<Space>` `<` `E` `s` `c` `>` `<Enter>`.
 
-## Applying {rstudiovim}
 
-```{r setup}
-library(rstudiovim)
+### Recursive keybindings
+
+One thing to watch out for is that the commands listed above are recursive. If
+you use command `map p p`, you won't be able to paste anymore because `p` just
+refers to itself instead of the paste command. Pressing `p` will just do
+nothing.
+
+At present RStudio does not offer non-recurseive (`nore`) versions of the map
+commands typically among Vim ex commands like `noremap`. This means we're mostly
+limited to creating commands for _new_ key chains, like `jk` above.
+
+## Applying commands to every session with {rstudiovim}
+
+If we're happy with a command and can run ourselves in RStudio, it should be
+relatively straightforward to get that command to run every session. With
+{rstudiovim} installed and loaded we can set up a config file and have it
+executed every session. If you've read the README, you've already seen
+everything you need.
+
+The typical config file is called `.vimrc`. You can create your own version at 
+any location and supply the path, but the simplest usage will be with the default
+path provided.
+
+```r
+file.edit(rsvim_default_path())
+```
+
+Then simply add your commands to the file, each on a separate line.You can add
+comment lines by preceding them with double quotes `"` like so:
+
+```vim
+" home-row exit from insert mode
+imap jk <Esc>
+
+```
+
+You must of course save the file! The we just need to point the 
+
+### Rprofile
+
+Your 
+[`.Rprofile`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Startup)
+is a file containing R code to be executed at the start of every R session.
+
+Be mindful you can have a .Rprofile at both the user level and project level - 
+one at project level will be executed instead of user level one, so make sure 
+the rsvim call is where you need it.
+
+```r
+# User level
+file.edit("~/.Rprofile")
+# Project level
+file.edit(".Rprofile")
 ```
 
 ### Troubleshooting
@@ -60,7 +117,7 @@ is one you can execute in RStudio yourself first. If it doesn't there's not much
 executing your `rsvim_exec_file()` call again. Sometimes the execution gets 
 interrupted by other processes.
 
-- If a command works for you when you type itself, but doesn't seem to work with
+- If a command works for you when you type it yourself, but doesn't seem to work with
 {rstudiovim}, then there may be an issue in the parsing of your commands and 
 translation to keypresses. There is an argument `wait` with which you can specify
 seconds to wait between your commands being typed and then executed. In this way
