@@ -1,4 +1,4 @@
-#' Execute vim command in source editor
+#' Execute a single Vim command in the source editor
 #'
 #' Pass a string to be executed as a Vim command in the RStudio source editor.
 #' This function then sends the input key presses to type out the command.
@@ -9,8 +9,8 @@
 #' to source yourself. It will error with a different at the front like a
 #' [View()] tab.
 #'
-#' @param command String. A vim command to execute. This is the text you would
-#'   type in the vim command dialogue box after pressing `:` and before pressing
+#' @param command String. A Vim command to execute. This is the text you would
+#'   type in the Vim command dialogue box after pressing `:` and before pressing
 #'   `Enter`.
 #'
 #' @param wait Numeric. Seconds to delay between typing the command and pressing

@@ -2,13 +2,13 @@
 % Please edit documentation in R/rsvim_exec.R
 \name{rsvim_exec}
 \alias{rsvim_exec}
-\title{Execute vim command in source editor}
+\title{Execute a single Vim command in the source editor}
 \usage{
 rsvim_exec(command, wait = 0)
 }
 \arguments{
-\item{command}{String. A vim command to execute. This is the text you would
-type in the vim command dialogue box after pressing \code{:} and before pressing
+\item{command}{String. A Vim command to execute. This is the text you would
+type in the Vim command dialogue box after pressing \code{:} and before pressing
 \code{Enter}.}
 
 \item{wait}{Numeric. Seconds to delay between typing the command and pressing

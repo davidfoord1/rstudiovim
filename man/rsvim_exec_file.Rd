@@ -2,7 +2,7 @@
 % Please edit documentation in R/rsvim_exec_file.R
 \name{rsvim_exec_file}
 \alias{rsvim_exec_file}
-\title{Execute all commands in a vim config file}
+\title{Execute all commands in a Vim config file}
 \usage{
 rsvim_exec_file(con = rsvim_default_path(), rprofile = FALSE, wait = 0)
 }
