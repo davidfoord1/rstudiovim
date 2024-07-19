@@ -19,3 +19,4 @@ Exits R execution.
 \description{
 Helper function for rsvim_exec
 }
+\keyword{internal}

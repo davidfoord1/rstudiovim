@@ -78,6 +78,8 @@ rsvim_exec <- function(command, wait = 0) {
 #' @param command the Vim command that was being attempted.
 #' @param suggestion suggest a possible cause/fix for the error.
 #'
+#' @keywords internal
+#'
 #' @return
 #' Exits R execution.
 exec_stop <- function(message, command, suggestion = "") {

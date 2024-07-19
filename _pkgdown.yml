@@ -1,4 +1,17 @@
 url: https://davidfoord1.github.io/rstudiovim/
+
 template:
   bootstrap: 5
+  light-switch: true
+  bootswatch: minty
+  theme: solarized-dark
+  theme-dark: solarized-dark
 
+reference:
+- title: "Execute Vim commands"
+  contents:
+  - rsvim_exec_file
+  - rsvim_exec
+- title: "Config file helpers"
+  contents:
+  - rsvim_default_path
