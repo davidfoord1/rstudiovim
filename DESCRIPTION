@@ -11,7 +11,7 @@ RoxygenNote: 7.3.1
 Imports: 
     Rcpp,
     rstudioapi
-URL: https://github.com/davidfoord1/rstudiovim
+URL: https://github.com/davidfoord1/rstudiovim, https://davidfoord1.github.io/rstudiovim/
 BugReports: https://github.com/davidfoord1/rstudiovim/issues
 Suggests: 
     knitr,
