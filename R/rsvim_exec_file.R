@@ -1,4 +1,4 @@
-#' Execute all commands in a Vim config file
+#' Execute all commands from a Vim config file
 #'
 #' @description Execute each line in a file as Vim commands. Include Vim
 #'   commands `map`, `imap`, `nmap` and `vmap` in your file to customise your
