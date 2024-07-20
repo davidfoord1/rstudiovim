@@ -4,8 +4,9 @@ template:
   bootstrap: 5
   light-switch: true
   bootswatch: minty
-  theme: solarized-dark
-  theme-dark: solarized-dark
+  theme: dracula
+  bslib:
+    primary: "#1DB877"
 
 reference:
 - title: "Execute Vim commands"
