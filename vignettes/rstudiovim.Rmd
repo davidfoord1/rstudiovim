@@ -22,10 +22,11 @@ commands, the main package functionality and applying it with an Rprofile file.
 
 RStudio offers a few commands for setting up key bindings:
 
+- `map`  - for normal, visual and operator pending modes. 
 - `imap` - insert mode.
 - `nmap` - normal mode.
 - `vmap` - visual mode.
-- `map`  - for both normal and visual modes. 
+- `omap` - operator pending mode.
 
 The general structure then goes like this:
 
@@ -51,16 +52,30 @@ keybinding with `imap jk <Esc>`, in full pressing the keys `:` `i` `m` `a` `p`
 `<Space>` `j` `k` `<Space>` `<` `E` `s` `c` `>` `<Enter>`.
 
 
-### Recursive keybindings
+### Non-recursive key bindings
 
-One thing to watch out for is that the commands listed above are recursive. If
+The `map` commands listed above are recursive. If
 you use command `map p p`, you won't be able to paste anymore because `p` just
-refers to itself instead of the paste command. Pressing `p` will just do
-nothing.
+refers to itself instead of the paste command.
 
-At present RStudio does not offer non-recurseive (`nore`) versions of the map
-commands typically among Vim ex commands like `noremap`. This means we're mostly
-limited to creating commands for _new_ key chains, like `jk` above.
+There are non-recursive `noremap` equivalents for the different modes, which is
+useful if you want to replace existing mappings with improved functionality.
+This allows us to do things like centre the screen on search results:
+
+`nnoremap n nzz`
+
+That's a `n` normal mode `nore` non-recursive `map` key binding.
+
+### Clear bindings
+
+There are `mapclear` versions of these commands to remove the mappings you've 
+created. So you can clear the above bindings with:
+
+```vim
+nmapclear n
+```
+
+You can also completely remove bindings with `unmap` (use carefully!)
 
 ## Applying commands with {rstudiovim}
 
@@ -160,7 +175,8 @@ for you.
 
 - First, the Vim implementation is quite limited, so always make sure the command
 is one you can execute in RStudio yourself first. If it doesn't, there's not much
-{rstudiovim} can do about it.
+{rstudiovim} can do about it. Make sure you update RStudio to its latest version
+to keep up to date with the functionality.
 
 - If something doesn't work that usually does, try restarting the R session and
 executing an `rsvim_exec_file()` call again. Sometimes the execution gets 
