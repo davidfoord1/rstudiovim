@@ -15,5 +15,6 @@ reference:
   - rsvim_exec
 - title: "Config file helpers"
   contents:
+  - rsvim_use_template
   - rsvim_default_path
   - rsvim_example_path

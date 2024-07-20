@@ -12,7 +12,7 @@ String. The full path to the example file.
 \description{
 Get the path to the \code{example.virmc} in the installed package.
 This file is used as the default template for
-\verb{[rsvim_use_template()]}. You can use
+\code{\link[=rsvim_use_template]{rsvim_use_template()}}. You can use
 this if you want to review the file in your editor.
 You can also view the file online at
 \href{https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc}{GitHub example.virmc}
