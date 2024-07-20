@@ -16,3 +16,4 @@ reference:
 - title: "Config file helpers"
   contents:
   - rsvim_default_path
+  - rsvim_example_path
