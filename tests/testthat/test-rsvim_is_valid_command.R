@@ -13,4 +13,7 @@ test_that("rsvim_is_valid_command correctly validates commands", {
   expect_false(rsvim_is_valid_command(""))
   expect_false(rsvim_is_valid_command(1))
   expect_false(rsvim_is_valid_command(NA_character_))
+
+  expect_error(rsvim_is_valid_command(c("map", "imap")))
+  expect_error(rsvim_is_valid_command(LETTERS))
 })
