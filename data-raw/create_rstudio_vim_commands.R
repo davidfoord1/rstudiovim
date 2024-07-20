@@ -38,7 +38,7 @@ parse_command <- function(command_string) {
   name <- gsub("name: '|'", "", name)
   short_name <- ifelse(length(short_name) > 0, gsub("shortName: '|'", "", short_name), NA)
 
-  list(name = name, shortName = short_name)
+  list(name = name, short_name = short_name)
 }
 
 rstudio_vim_commands <- lapply(command_strings, parse_command)
