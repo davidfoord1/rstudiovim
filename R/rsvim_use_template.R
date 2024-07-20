@@ -26,13 +26,24 @@
 #' }
 rsvim_use_template <- function(to = rsvim_default_path(),
                                from = rsvim_example_path(),
-                               overwrite = FALSE){
-  # checks
+                               overwrite = FALSE) {
+  stopifnot(is.character(to))
+  stopifnot(length(to) == 1)
+  stopifnot(is.na(to))
+
+  stopifnot(is.character(from))
+  stopifnot(length(from) == 1)
+  stopifnot(is.na(from))
+
+  stopifnot(is.logical(overwrite))
+  stopifnot(length(overwrite) == 1)
+  stopifnot(is.na(overwrite))
+
+  stopifnot(file.exists(from))
+
   if (file.exists(to) & !overwrite) {
     stop(paste("File already exists at", to))
   }
-
-  stopifnot(file.exists(from))
 
   if (file.exists(to) & overwrite) {
     message("Overwriting Vim config file.")
