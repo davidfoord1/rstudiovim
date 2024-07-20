@@ -17,6 +17,7 @@ reference:
   contents:
   - rsvim_use_template
   - rsvim_add_command
+  - rsvim_is_valid_command
   - rsvim_default_path
   - rsvim_example_path
 - title: "Supporting info"
