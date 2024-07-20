@@ -25,9 +25,9 @@
 #' # it is not a complete list at present:
 #' rsvim_is_valid_command("help")
 rsvim_is_valid_command <- function(command) {
+  stopifnot(is.character(command))
   stopifnot(length(command) == 1)
-
-  if (!is.character(command)) return(FALSE)
+  stopifnot(!is.na(command))
 
   valid_commands <- c(rstudio_vim_commands[["name"]],
                       rstudio_vim_commands[["shortName"]])
