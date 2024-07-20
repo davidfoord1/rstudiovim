@@ -24,8 +24,17 @@ rsvim_add_command <- function(command,
                               comment = "",
                               to = rsvim_default_path()) {
   stopifnot(is.character(command))
+  stopifnot(length(command) == 1)
+  stopifnot(!is.na(command))
+
   stopifnot(is.character(comment))
+  stopifnot(length(comment) == 1)
+  stopifnot(!is.na(comment))
+
   stopifnot(is.character(to))
+  stopifnot(length(to) == 1)
+  stopifnot(!is.na(to))
+
   stopifnot(file.exists(to))
 
   write("\n", to, append = TRUE)
