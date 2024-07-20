@@ -58,6 +58,14 @@
 rsvim_exec_file <- function(con = rsvim_default_path(),
                             rprofile = FALSE,
                             wait = 0) {
+  stopifnot(length(con) == 1)
+
+  stopifnot(is.logical(rprofile))
+  stopifnot(length(rprofile) == 1)
+
+  stopifnot(is.numeric(wait))
+  stopifnot(length(wait) == 1)
+
   # check and execute individual lines
   exec_command <- function(command) {
     is_comment <- startsWith(command, '\"')
