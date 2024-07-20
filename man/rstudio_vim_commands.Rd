@@ -3,15 +3,12 @@
 \docType{data}
 \name{rstudio_vim_commands}
 \alias{rstudio_vim_commands}
-\title{RStudio Vim Commands}
+\title{RStudio Vim Commands data.frame}
 \format{
-\subsection{\code{rstudio_vim_commands}}{
-
 A data frame with < 50 rows and 2 columns:
 \describe{
 \item{name}{Full command name}
 \item{short_name}{Shorthand that can be used instead}
-}
 }
 }
 \source{

@@ -19,3 +19,6 @@ reference:
   - rsvim_add_command
   - rsvim_default_path
   - rsvim_example_path
+- title: "Supporting info"
+  contents:
+  - rstudio_vim_commands
