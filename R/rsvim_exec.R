@@ -37,7 +37,12 @@
 #' rsvim_exec("help")
 #' }
 rsvim_exec <- function(command, wait = 0) {
+  stopifnot(is.character(command))
+  stopifnot(length(command) == 1)
+  stopifnot(nchar(trimws(command)) != 0)
+
   stopifnot(is.numeric(wait))
+  stopifnot(length(wait) == 1)
 
   editor <- rstudioapi::getSourceEditorContext()
 
