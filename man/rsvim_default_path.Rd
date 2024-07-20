@@ -20,5 +20,7 @@ file.edit(rsvim_default_path())
 }
 }
 \seealso{
-\code{\link[=rsvim_exec_file]{rsvim_exec_file()}} To execute commands from a file at this path.
+\code{\link[=rsvim_exec_file]{rsvim_exec_file()}} To execute commands from a file.
+
+\code{\link[=rsvim_add_command]{rsvim_add_command()}} To append a command to a file.
 }

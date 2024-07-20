@@ -8,7 +8,9 @@
 #'
 #' @export
 #'
-#' @seealso [rsvim_exec_file()] To execute commands from a file at this path.
+#' @seealso [rsvim_exec_file()] To execute commands from a file.
+#'
+#' [rsvim_add_command()] To append a command to a file.
 #'
 #' @examples
 #' \dontrun{
