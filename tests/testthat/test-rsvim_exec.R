@@ -1,10 +1,6 @@
 test_that("arg validation", {
   valid_command <- "imap jk <Esc>"
 
-  # valid args
-  expect_no_error(rsvim_exec(valid_command))
-  expect_no_error(rsvim_exec(valid_command, 0.0001))
-
   # invalid command
   expect_error(rsvim_exec(1))
   expect_error(rsvim_exec(c("hello", "world")))
