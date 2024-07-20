@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Vim configuration for RStudio • rstudiovim</title>
-<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">rstudiovim</a>
 
@@ -39,6 +39,14 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/davidfoord1/rstudiovim/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
@@ -52,60 +60,42 @@
 <!-- badges: start -->
 
 <div class="section level2">
-<h2 id="configure-rstudio-vim-keybindings-️">Configure RStudio Vim keybindings ⌨️<a class="anchor" aria-label="anchor" href="#configure-rstudio-vim-keybindings-%EF%B8%8F"></a>
+<h2 id="configure-rstudio-vim-key-bindings-️">Configure RStudio Vim key bindings ⌨️<a class="anchor" aria-label="anchor" href="#configure-rstudio-vim-key-bindings-%EF%B8%8F"></a>
 </h2>
-<p>RStudio supports Vim keybindings in the source editor, but <a href="https://github.com/rstudio/rstudio/issues/7350" class="external-link">doesn’t support a Vim keybinding config</a>. {rstudiovim} offers a 🪟 <strong>Windows-only</strong> workaround by reading Vim commands from a file and simulating key presses to execute them on your behalf.</p>
-<p>Ok, slow down a moment. If you’re here, you should probably be seriously considering using a different editor, with more comprehensive and configurable Vim features. Check out <a href="https://neovim.io/" class="external-link">Neovim</a> with <a href="https://github.com/R-nvim/R.nvim" class="external-link">R.nvim</a> or <a href="https://github.com/quarto-dev/quarto-nvim" class="external-link">quarto-nvim</a>. To be clear, this package is <strong>not</strong> a neat RStudio API integration with its Vim mode, there is no such option. This is just: you list what buttons you want pressed; the buttons are pressed automatically for you. Nonetheless, it kind of works, so you are welcome to go crazy with me…</p>
-<div class="section level3">
-<h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
-</h3>
-<p>You can install the package from <a href="https://github.com/davidfoord1/rstudiovim" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"davidfoord1/rstudiovim"</span><span class="op">)</span></span></code></pre></div>
-<p>Attach and load the package with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidfoord1/rstudiovim" class="external-link">rstudiovim</a></span><span class="op">)</span></span></code></pre></div>
-<p>Create and edit a config file (<code>.vimrc</code>) with a Vim command on each line. Edit at the suggest path:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html" class="external-link">file.edit</a></span><span class="op">(</span><span class="fu"><a href="reference/rsvim_default_path.html">rsvim_default_path</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Use Vim commands <code>map</code>, <code>imap</code>, <code>nmap</code> and <code>vmap</code> in the file to create new keybindings. Execute all the commands in the file with one function call and they will persist for the RStudio session. Go further by having the package execute these commands at the start of every RStudio session using your <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Startup" class="external-link"><code>.Rprofile</code></a>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Interactively</span></span>
-<span><span class="fu"><a href="reference/rsvim_exec_file.html">rsvim_exec_file</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># In your Rprofile</span></span>
-<span><span class="fu">rstudiovim</span><span class="fu">::</span><span class="fu"><a href="reference/rsvim_exec_file.html">rsvim_exec_file</a></span><span class="op">(</span>rprofile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-</div>
+<p>RStudio supports Vim key bindings in the source editor, but <a href="https://github.com/rstudio/rstudio/issues/7350" class="external-link">doesn’t support a Vim config</a>. {rstudiovim} offers a 🪟 <strong>Windows-only</strong> workaround by reading Vim commands from a file and simulating key presses to execute them on your behalf.</p>
+<p>Ok, slow down a moment. If you’re here, you should probably be seriously considering using a different editor, with more comprehensive and configurable Vim features. Perhaps check out <a href="https://neovim.io/" class="external-link">Neovim</a> with <a href="https://github.com/R-nvim/R.nvim" class="external-link">R.nvim</a> or <a href="https://github.com/quarto-dev/quarto-nvim" class="external-link">quarto-nvim</a>. To be clear, this package is <strong>not</strong> a neat RStudio API integration with its Vim mode, there is no such option. This is just: you list what buttons you want pressed; the buttons are pressed automatically for you. Nonetheless, it kind of works, so you are welcome to go crazy with me…</p>
 </div>
 <div class="section level2">
-<h2 id="example-">Example 🔍<a class="anchor" aria-label="anchor" href="#example-"></a>
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>From editing in normal mode you press <code>:</code> to enter command-line mode, typing your command and then pressing <code>Enter</code> to execute it. If you wanted a home-row key chain to exit insert mode you might use the ex command <code>imap jk &lt;Esc&gt;</code>. Then whenever you are insert mode and type <code>jk</code>, you will return to normal mode. Again, these mappings only persist for your RStudio session, so {rstudiovim} is here to help you apply these settings every time you are editing in RStudio.</p>
-<p><strong>Write the commands in your .vimrc file</strong></p>
-<p>Each command must be on its own line. Do not include the preceding <code>:</code>. Just use the text you would enter in the command dialogue box. You can add comment lines by preceding them with double quotes <code>"</code> like so:</p>
+<p>Install and load the package:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"davidfoord1/rstudiovim"</span><span class="op">)</span></span>
+<span><span class="co"># load and attach:</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidfoord1/rstudiovim" class="external-link">rstudiovim</a></span><span class="op">)</span></span></code></pre></div>
+<p>Create and edit a config file (<code>.vimrc</code>) with a Vim command on each line. Edit at the suggested path:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html" class="external-link">file.edit</a></span><span class="op">(</span><span class="fu"><a href="reference/rsvim_default_path.html">rsvim_default_path</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Use Vim commands <code>map</code>, <code>imap</code>, <code>nmap</code> and <code>vmap</code> in the file to create new key bindings. Each command must be on its own line. You can add comment lines by preceding them with double quotes <code>"</code> like so:</p>
 <pre class="vim"><code>" home-row exit from insert mode
 imap jk &lt;Esc&gt;
 </code></pre>
-<p><strong>Edit your .Rprofile</strong></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html" class="external-link">file.edit</a></span><span class="op">(</span><span class="st">"~/.Rprofile"</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Include the function call to execute the file’s commands.</strong></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>You can then execute all the commands in the file with one function call and they will persist for the RStudio session. Then by having the package execute these commands at the start of every RStudio session with the following in your <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Startup" class="external-link"><code>.Rprofile</code></a>:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="op">{</span></span>
 <span>  <span class="fu">rstudiovim</span><span class="fu">::</span><span class="fu"><a href="reference/rsvim_exec_file.html">rsvim_exec_file</a></span><span class="op">(</span>rprofile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>With those files saved, now every session, you can use <code>jk</code> to return to normal mode.</p>
-</div>
-<div class="section level2">
-<h2 id="config-in-the-cloud-️">Config in the cloud ☁️<a class="anchor" aria-label="anchor" href="#config-in-the-cloud-%EF%B8%8F"></a>
-</h2>
-<p>The exec file function points by default to the <code><a href="reference/rsvim_default_path.html">rsvim_default_path()</a></code> path, but you can use any text file or connection object containing your Vim commands. For instance you can use a web location to easily share the config between machines, like this to execute the <a href="https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc" class="external-link">example vimrc</a>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="section level3">
+<h3 id="config-in-the-cloud-️">Config in the cloud ☁️<a class="anchor" aria-label="anchor" href="#config-in-the-cloud-%EF%B8%8F"></a>
+</h3>
+<p>The <code><a href="reference/rsvim_exec_file.html">rsvim_exec_file()</a></code> points by default to the <code><a href="reference/rsvim_default_path.html">rsvim_default_path()</a></code> path, but you can use any text file or connection object containing your Vim commands. For instance you can use a web location to easily share the config between machines, like this to execute the <a href="https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc" class="external-link">example vimrc</a>:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/rsvim_exec_file.html">rsvim_exec_file</a></span><span class="op">(</span><span class="st">"https://raw.github.com/davidfoord1/rstudiovim/main/inst/example.vimrc"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="conditions-for-success-">Conditions for success. 📃<a class="anchor" aria-label="anchor" href="#conditions-for-success-"></a>
-</h2>
+<div class="section level3">
+<h3 id="conditions-for-success-">Conditions for success. 📃<a class="anchor" aria-label="anchor" href="#conditions-for-success-"></a>
+</h3>
 <ol style="list-style-type: decimal">
 <li>You’re using RStudio on Windows.</li>
 <li>Setting <code>Keybinding set for editor</code> must be Vim (of course!).</li>
@@ -113,6 +103,8 @@ imap jk &lt;Esc&gt;
 <strong>A file must be open in the source editor</strong>, so that you could execute Vim commands if you navigated to source yourself. It must be a file tab at the front, not a non-file tab like a <code><a href="https://rdrr.io/r/utils/View.html" class="external-link">View()</a></code> pane.</li>
 <li>Don’t give inputs while the button presses are being executed as you can interrupt it.</li>
 </ol>
+<p>See <code><a href="articles/rstudiovim.html">vignette("rstudiovim")</a></code> for a more detailed introduction.</p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

@@ -3,7 +3,7 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   rstudiovim: rstudiovim.html
-last_built: 2024-07-19T11:48Z
+last_built: 2024-07-20T13:29Z
 urls:
   reference: https://davidfoord1.github.io/rstudiovim/reference
   article: https://davidfoord1.github.io/rstudiovim/articles
