@@ -77,13 +77,16 @@ applying it with an Rprofile file.</p>
 <p>RStudio offers a few commands for setting up key bindings:</p>
 <ul>
 <li>
+<code>map</code> - for normal, visual and operator pending
+modes.</li>
+<li>
 <code>imap</code> - insert mode.</li>
 <li>
 <code>nmap</code> - normal mode.</li>
 <li>
 <code>vmap</code> - visual mode.</li>
 <li>
-<code>map</code> - for both normal and visual modes.</li>
+<code>omap</code> - operator pending mode.</li>
 </ul>
 <p>The general structure then goes like this:</p>
 <p><code>&lt;map_command&gt; &lt;new_key_sequence&gt; &lt;keys_to_execute&gt;</code></p>
@@ -110,16 +113,28 @@ pressing the keys <code>:</code> <code>i</code> <code>m</code>
 <code>&lt;Enter&gt;</code>.</p>
 </div>
 <div class="section level3">
-<h3 id="recursive-keybindings">Recursive keybindings<a class="anchor" aria-label="anchor" href="#recursive-keybindings"></a>
+<h3 id="non-recursive-key-bindings">Non-recursive key bindings<a class="anchor" aria-label="anchor" href="#non-recursive-key-bindings"></a>
 </h3>
-<p>One thing to watch out for is that the commands listed above are
-recursive. If you use command <code>map p p</code>, you won’t be able to
-paste anymore because <code>p</code> just refers to itself instead of
-the paste command. Pressing <code>p</code> will just do nothing.</p>
-<p>At present RStudio does not offer non-recurseive (<code>nore</code>)
-versions of the map commands typically among Vim ex commands like
-<code>noremap</code>. This means we’re mostly limited to creating
-commands for <em>new</em> key chains, like <code>jk</code> above.</p>
+<p>The <code>map</code> commands listed above are recursive. If you use
+command <code>map p p</code>, you won’t be able to paste anymore because
+<code>p</code> just refers to itself instead of the paste command.</p>
+<p>There are non-recursive <code>noremap</code> equivalents for the
+different modes, which is useful if you want to replace existing
+mappings with improved functionality. This allows us to do things like
+centre the screen on search results:</p>
+<p><code>nnoremap n nzz</code></p>
+<p>That’s a <code>n</code> normal mode <code>nore</code> non-recursive
+<code>map</code> key binding.</p>
+</div>
+<div class="section level3">
+<h3 id="clear-bindings">Clear bindings<a class="anchor" aria-label="anchor" href="#clear-bindings"></a>
+</h3>
+<p>There are <code>mapclear</code> versions of these commands to remove
+the mappings you’ve created. So you can clear the above bindings
+with:</p>
+<pre class="vim"><code>nmapclear n</code></pre>
+<p>You can also completely remove bindings with <code>unmap</code> (use
+carefully!)</p>
 </div>
 </div>
 <div class="section level2">
@@ -133,7 +148,7 @@ you’ve already seen everything you need.</p>
 <p>The typical config file is called <code>.vimrc</code>. You can create
 your own version at any location and supply the path, but the simplest
 usage will be with the default path provided.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html" class="external-link">file.edit</a></span><span class="op">(</span><span class="fu"><a href="../reference/rsvim_default_path.html">rsvim_default_path</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Then add your commands to the file, with each on a separate line. You
 can add comment lines by preceding them with double quotes
@@ -144,7 +159,7 @@ imap jk &lt;Esc&gt;
 <p>You must of course save the file! Then we need to point {rstudiovim}
 to your file to execute. With the default file path, it’s as simple
 as:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rsvim_exec_file.html">rsvim_exec_file</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>There is a prerequisite that you have a file open at the front of
 your source editor as though you were going to enter the commands - the
@@ -157,7 +172,7 @@ not to interrupt the process. Once done, it reports</p>
 It’s read with <code><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines()</a></code>, so can can be a remote location
 as well - which can make it easy to share your config between devices.
 For example:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rsvim_exec_file.html">rsvim_exec_file</a></span><span class="op">(</span><span class="st">"https://raw.github.com/davidfoord1/rstudiovim/main/inst/example.vimrc"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="applying-commands-to-every-session-with-an-rprofile">Applying commands to every session with an Rprofile<a class="anchor" aria-label="anchor" href="#applying-commands-to-every-session-with-an-rprofile"></a>
@@ -167,7 +182,7 @@ is a file containing R code to be executed at the start of every R
 session. Be mindful you can have a .Rprofile at both the user level and
 project level - one at project level will be executed instead of user
 level one, so make sure the rsvim call is where you need it.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># User level</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html" class="external-link">file.edit</a></span><span class="op">(</span><span class="st">"~/.Rprofile"</span><span class="op">)</span></span>
 <span><span class="co"># Project level</span></span>
@@ -177,13 +192,13 @@ command will set a hook to execute on the R Studio session start up. It
 won’t execute on every <em>R</em> session restart - it won’t need to as
 the bindings persist through the <em>R Studio</em> session. To get the
 config file to be executed, include the following R code:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="va">interactive</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">rstudiovim</span><span class="fu">::</span><span class="fu"><a href="../reference/rsvim_exec_file.html">rsvim_exec_file</a></span><span class="op">(</span>rprofile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Alternatively if you think you might want the package attached every
 session:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="va">interactive</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidfoord1/rstudiovim" class="external-link">rstudiovim</a></span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="../reference/rsvim_exec_file.html">rsvim_exec_file</a></span><span class="op">(</span>rprofile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -199,7 +214,9 @@ executing the key presses for you.</p>
 <ul>
 <li><p>First, the Vim implementation is quite limited, so always make
 sure the command is one you can execute in RStudio yourself first. If it
-doesn’t, there’s not much {rstudiovim} can do about it.</p></li>
+doesn’t, there’s not much {rstudiovim} can do about it. Make sure you
+update RStudio to its latest version to keep up to date with the
+functionality.</p></li>
 <li><p>If something doesn’t work that usually does, try restarting the R
 session and executing an <code><a href="../reference/rsvim_exec_file.html">rsvim_exec_file()</a></code> call again.
 Sometimes the execution gets interrupted by other processes.</p></li>
