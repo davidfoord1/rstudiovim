@@ -3,5 +3,5 @@ test_that("multiplication works", {
 
   result <- rsvim_example_path()
 
-  expect_true(basename(result) == "example.vimrc")
+  expect_true(basename(result) == "basic.vimrc")
 })

@@ -10,10 +10,10 @@ rsvim_example_path()
 String. The full path to the example file.
 }
 \description{
-Get the path to the \code{example.virmc} in the installed package.
+Get the path to the example \code{basic.virmc} in the installed package.
 This file is used as the default template for
 \code{\link[=rsvim_use_template]{rsvim_use_template()}}. You can use
 this if you want to review the file in your editor.
 You can also view the file online at
-\href{https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc}{GitHub example.virmc}
+\href{https://github.com/davidfoord1/rstudiovim/blob/main/inst/basic.vimrc}{basic.virmc}
 }

@@ -25,7 +25,7 @@ Returns the \code{to} path invisibly.
 \description{
 Create a new config file from an existing config file. By default this is
 based on the
-\href{https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc}{example.virmc}.
+\href{https://github.com/davidfoord1/rstudiovim/blob/main/inst/basic.vimrc}{basic.virmc}.
 }
 \examples{
 \dontrun{

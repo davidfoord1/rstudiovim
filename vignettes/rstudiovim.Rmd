@@ -58,9 +58,10 @@ The `map` commands listed above are recursive. If
 you use command `map p p`, you won't be able to paste anymore because `p` just
 refers to itself instead of the paste command.
 
-There are non-recursive `noremap` equivalents for the different modes, which is
-useful if you want to replace existing mappings with improved functionality.
-This allows us to do things like centre the screen on search results:
+There are non-recursive equivalents for the different modes, just replace `map`
+with `noremap`. This is useful if you want to tweak/extend the functionality of
+existing mappings. This allows us to do things like centre the screen on search
+results:
 
 `nnoremap n nzz`
 
@@ -108,7 +109,6 @@ file to execute. With the default file path, it's as simple as:
 ```r
 rsvim_exec_file()
 ```
-
 
 
 There is a prerequisite that you have a file open at the front of your source
@@ -170,6 +170,19 @@ if (interactive) {
 Again, remember to save your file. Ok, that should be it. Now when you open a new
 RStudio session, you should see that {rstudiovim} is executing the key presses 
 for you.
+
+### Templates
+
+You can quickly set up a config from the 
+[basic.vimrc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc)
+example using:
+
+```r
+rsvim_use_template()
+```
+
+You can see `vignette("config-examples")` for a walk through of using templates 
+and more example commands you might want to use.
 
 ## Troubleshooting
 

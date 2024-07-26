@@ -2,7 +2,7 @@
 #'
 #' Create a new config file from an existing config file. By default this is
 #' based on the
-#' [example.virmc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc).
+#' [basic.virmc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/basic.vimrc).
 #'
 #' @param to String. File path to write the Vim config file.
 #' @param from String. File path to the config file to copy from.
