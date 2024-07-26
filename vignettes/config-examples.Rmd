@@ -26,7 +26,7 @@ ignore and tweak as you please.
 ## Build from a template
 
 A few simple examples are provided in the 
-[example.vimrc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc).
+[basic.vimrc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/basic.vimrc).
 You can see the example at the `rsvim_example_path()` and you can use it to start
 building your own config with:
 
@@ -34,12 +34,9 @@ building your own config with:
 rsvim_use_template()
 ```
 
-This function takes the example, writes it to a `.virmc` file and opens it for 
-you to make your own edits. You can also specify the files to copy to and from:
-
-
-
-
+This function takes the basic examples, writes it to a `.virmc` file and opens
+it for you to make your own edits. You can also specify the files to copy to and
+from:
 
 ```r
 rsvim_use_template(
@@ -73,5 +70,13 @@ convenient compared to `Esc`.
 
 3. New line in normal mode 
 
-noremap \o o<Esc>
-noremap \O O<Esc>
+`noremap \o o<Esc>`
+`noremap \O O<Esc>`
+
+## Full example
+
+A lot more examples are given in the full example, which you can build from with
+
+```r
+rsvim_use_template(from = rsvim_example_path("full_example"))
+```
