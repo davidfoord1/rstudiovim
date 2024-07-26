@@ -4,16 +4,20 @@
 \alias{rsvim_example_path}
 \title{Path to rstudiovim example config}
 \usage{
-rsvim_example_path()
+rsvim_example_path(name = c("basic", "full_example"))
+}
+\arguments{
+\item{name}{String. Name of the example file to find the path to. 2 are
+provided, "basic" and "full_example".}
 }
 \value{
 String. The full path to the example file.
 }
 \description{
-Get the path to the example \code{basic.virmc} in the installed package.
-This file is used as the default template for
+Get the path to the example \code{.vimrc}s in the installed package.
+The basic file is used as the default template for
 \code{\link[=rsvim_use_template]{rsvim_use_template()}}. You can use
 this if you want to review the file in your editor.
-You can also view the file online at
-\href{https://github.com/davidfoord1/rstudiovim/blob/main/inst/basic.vimrc}{basic.virmc}
+You can also view the files online in the GitHub
+\href{https://github.com/davidfoord1/rstudiovim/blob/main/inst/}{inst folder}.
 }
