@@ -19,6 +19,8 @@
 #' \dontrun{
 #' rsvim_use_template()
 #'
+#' rsvim_use_template(from = rsvim_example_path("full_example"))
+#'
 #' rsvim_use_template(
 #'   "path/to/my/custom/.virmc",
 #'   "path/to/template/.virmc"
