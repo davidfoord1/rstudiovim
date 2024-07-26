@@ -31,6 +31,12 @@
       <ul class="navbar-nav me-auto">
 <li class="active nav-item"><a class="nav-link" href="../articles/rstudiovim.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/config-examples.html">Build your config from examples</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -118,10 +124,10 @@ pressing the keys <code>:</code> <code>i</code> <code>m</code>
 <p>The <code>map</code> commands listed above are recursive. If you use
 command <code>map p p</code>, you won’t be able to paste anymore because
 <code>p</code> just refers to itself instead of the paste command.</p>
-<p>There are non-recursive <code>noremap</code> equivalents for the
-different modes, which is useful if you want to replace existing
-mappings with improved functionality. This allows us to do things like
-centre the screen on search results:</p>
+<p>There are non-recursive equivalents for the different modes, just
+replace <code>map</code> with <code>noremap</code>. This is useful if
+you want to tweak/extend the functionality of existing mappings. This
+allows us to do things like centre the screen on search results:</p>
 <p><code>nnoremap n nzz</code></p>
 <p>That’s a <code>n</code> normal mode <code>nore</code> non-recursive
 <code>map</code> key binding.</p>
@@ -206,6 +212,17 @@ session:</p>
 <p>Again, remember to save your file. Ok, that should be it. Now when
 you open a new RStudio session, you should see that {rstudiovim} is
 executing the key presses for you.</p>
+</div>
+<div class="section level3">
+<h3 id="templates">Templates<a class="anchor" aria-label="anchor" href="#templates"></a>
+</h3>
+<p>You can quickly set up a config from the <a href="https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc" class="external-link">basic.vimrc</a>
+example using:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rsvim_use_template.html">rsvim_use_template</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>You can see <code><a href="../articles/config-examples.html">vignette("config-examples")</a></code> for a walk
+through of using templates and more example commands you might want to
+use.</p>
 </div>
 </div>
 <div class="section level2">
