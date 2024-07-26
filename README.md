@@ -39,9 +39,9 @@ at the suggested path:
 file.edit(rsvim_default_path())
 ```
 
-Use Vim commands `map`, `imap`, `nmap` and `vmap` in the file to
-create new key bindings. Each command must be on its own line. 
-You can add comment lines by preceding them with double quotes `"` like so:
+Use Vim commands like `map`, `imap`, `nmap` and their `noremap` variants in the
+file to create new key bindings. Each command must be on its own line. You can
+add comment lines by preceding them with double quotes `"` like so:
 
 ```vim
 " home-row exit from insert mode
@@ -49,10 +49,9 @@ imap jk <Esc>
 
 ```
 
-You can then execute all the commands in the file with
-one function call and they will persist for the RStudio session. Then by
-having the package execute these commands at the start of every RStudio session 
-with the following in your
+You can then execute all the commands in the file with one function call and
+they will persist for the RStudio session. Then you execute these commands at
+the start of every RStudio session with the following in your
 [`.Rprofile`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Startup):
 
 ```r
@@ -65,10 +64,10 @@ if (interactive())  {
 The `rsvim_exec_file()` points by default to the `rsvim_default_path()` path, 
 but you can use any text file or connection object containing your Vim commands.
 For instance you can use a web location to easily share the config between
-machines, like this to execute the [example vimrc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc):
+machines, like this to execute the example [basic vimrc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/basic.vimrc):
 
 ```r
-rsvim_exec_file("https://raw.github.com/davidfoord1/rstudiovim/main/inst/example.vimrc")
+rsvim_exec_file("https://raw.github.com/davidfoord1/rstudiovim/main/inst/basic.vimrc")
 ```
 
 ### Conditions for success. 📃
@@ -80,7 +79,6 @@ commands if you navigated to source yourself. It must be a file tab at the front
 not a non-file tab like a `View()` pane.
 4. Don't give inputs while the button presses are being executed as you can 
 interrupt it.
-
 
 
 See `vignette("rstudiovim")` for a more detailed introduction.
