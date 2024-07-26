@@ -1,0 +1,77 @@
+---
+title: "Build your config from examples"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{config-examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE}
+library(rstudiovim)
+```
+
+First it's nice to know you can have a very quick start up
+
+Then we'll talk through some of examples to give you some ideas which you can pick,
+ignore and tweak as you please.
+
+## Build from a template
+
+A few simple examples are provided in the 
+[example.vimrc](https://github.com/davidfoord1/rstudiovim/blob/main/inst/example.vimrc).
+You can see the example at the `rsvim_example_path()` and you can use it to start
+building your own config with:
+
+```r
+rsvim_use_template()
+```
+
+This function takes the example, writes it to a `.virmc` file and opens it for 
+you to make your own edits. You can also specify the files to copy to and from:
+
+
+
+
+
+```r
+rsvim_use_template(
+  to = "path/to/your/.virmc",
+  from = "path/to/another/template/.vimrc"
+)
+```
+
+## Basic Example
+
+<details>
+<summary>See the full example config</summary>
+```{r comment="", collapse=FALSE}
+writeLines(readLines(rsvim_example_path()))
+```
+</details>
+
+1. Home row exit from insert mode - `inoremap jk <Esc>`
+
+You might have seen enough of this example by now, but we're covering it anyway.
+In `i` insert mode, we non-recursively `noremap` map the key chain `jk` to the
+key chain `<Esc>`. `Esc` is a standard way to exit from insert to normal mode,
+so this gives as a home row way to do the same. That can be pretty neat, by do
+consider whether you're likely to be typing `jk` while in insert mode. We use
+non-recursive mapping for safety, so for instance if you map `Esc` to something
+else, `jk` will still have the expected default `Esc` behaviour. Note there iNULLs
+also the `Ctrl+[` method for leaving insert mode, that might be sufficiently
+convenient compared to `Esc`.
+
+2. Multiple replace paste - `noremap \p "0p` 
+
+3. New line in normal mode 
+
+noremap \o o<Esc>
+noremap \O O<Esc>
